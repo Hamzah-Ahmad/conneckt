@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(6)
   },
   textField: {
     marginBottom: theme.spacing(3),
@@ -80,7 +80,7 @@ const Login = props => {
         />
         <br />
         <TextField
-          label="Outlined"
+          label="Password"
           variant="outlined"
           type="password"
           name="password"
@@ -88,6 +88,7 @@ const Login = props => {
           className={classes.textField}
           onChange={e => setPassword(e.target.value)}
         />
+
         <Button
           className={classes.button}
           color="primary"

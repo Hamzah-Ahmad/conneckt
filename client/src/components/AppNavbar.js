@@ -1,73 +1,61 @@
-import React, { Component, Fragment } from "react";
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  Nav,
-  NavItem,
-  Container
-} from "reactstrap";
-import { Link } from "react-router-dom";
+import React from "react";
+import { logout } from "../actions/authActions";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import Logout from "./auth/Logout";
 
-class AppNavbar extends Component {
-  state = {
-    isOpen: false
-  };
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+// import Icon from "@material-ui/core/Icon";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import Button from "@material-ui/core/Button";
 
-  static propTypes = {
-    auth: PropTypes.object.isRequired
-  };
-
-  toggle = () => {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  };
-
-  render() {
-    const { isAuthenticated, user } = this.props.auth;
-
-    const authLinks = ( //the multiline JSX expression in wrapped within () to add to the readability of the code, and as per the docs,
-      <Fragment>
-        <NavItem>
-          <span className="navbar-text mr-3">
-            <strong>{user ? `${user.name}` : ""}</strong>
-          </span>
-        </NavItem>
-        <NavItem>
-          <Logout />
-        </NavItem>
-      </Fragment>
-    );
-
-    const guestLinks = null; //Add any links that you want to show on the navbar when no user is logged in
-
-    return (
-      <Navbar color="dark" dark expand="sm" className="mb-5">
-        <Container>
-          <Nav>
-            <Link to="/" style={{ color: "white" }}>
-              Home
-            </Link>
-          </Nav>
-
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              {isAuthenticated ? authLinks : guestLinks}
-            </Nav>
-          </Collapse>
-        </Container>
-      </Navbar>
-    );
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1
+  },
+  menuButton: {
+    marginRight: theme.spacing(2)
+  },
+  title: {
+    flexGrow: 1
   }
-}
+}));
+
+const AppNavbar = props => {
+  const classes = useStyles();
+
+  const { user } = props;
+
+  return (
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          {/* <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+          >
+            <MenuIcon />
+          </IconButton> */}
+          <Typography variant="h6" className={classes.title}>
+            Connekt
+          </Typography>
+          <Typography>Hamzah Ahmad</Typography>
+          <Button color="inherit" onClick={props.logout}>
+            <ExitToAppIcon />
+          </Button>
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
+};
+
+//{isAuthenticated ? authLinks : guestLinks}
 
 const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, null)(AppNavbar);
+export default connect(mapStateToProps, { logout })(AppNavbar);

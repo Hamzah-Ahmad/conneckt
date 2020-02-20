@@ -2,24 +2,41 @@
 
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {
-  Button,
-  Container,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Alert
-} from "reactstrap";
+
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+
 import { connect } from "react-redux";
 import { register } from "../../actions/authActions";
 import { clearErrors } from "../../actions/errorActions";
+
+const useStyles = makeStyles(theme => ({
+  button: {
+    display: "block"
+  },
+  link: {
+    display: "block",
+    marginTop: theme.spacing(2)
+  },
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginTop: theme.spacing(6)
+  },
+  textField: {
+    marginBottom: theme.spacing(3),
+    width: 320
+  }
+}));
 
 const Register = props => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
+  const classes = useStyles();
 
   const { error, isAuthenticated } = props;
 
@@ -58,43 +75,51 @@ const Register = props => {
   };
   return (
     <div>
-      <div>
+      <div className={classes.root}>
         {msg ? <p color="danger">{msg}</p> : null}
         <form onSubmit={onSubmit}>
-          <label htmlFor="name">Name</label>
-          <input
+          <TextField
+            className={classes.textField}
+            label="Name"
+            variant="outlined"
             type="text"
             name="name"
             id="name"
-            placeholder="Name"
-            className="mb-3"
             onChange={e => setName(e.target.value)}
           />
 
-          <label htmlFor="email">Email</label>
-          <input
+          <br />
+          <TextField
+            className={classes.textField}
+            label="Email"
+            variant="outlined"
             type="email"
             name="email"
             id="email"
-            placeholder="Email"
-            className="mb-3"
             onChange={e => setEmail(e.target.value)}
           />
-
-          <label htmlFor="password">Password</label>
-          <input
+          <br />
+          <TextField
+            className={classes.textField}
+            label="Password"
+            variant="outlined"
             type="password"
             name="password"
             id="password"
-            placeholder="Password"
-            className="mb-3"
             onChange={e => setPassword(e.target.value)}
           />
-          <button color="dark" style={{ marginTop: "2rem" }} block="true">
+          <Button
+            className={classes.button}
+            color="primary"
+            variant="contained"
+            type="submit"
+          >
             Register
-          </button>
+          </Button>
+          <Link to="/login" className={classes.link}>
+            Already a member?
+          </Link>
         </form>
-        <Link to="/login">Already a member?</Link>
       </div>
     </div>
   );
