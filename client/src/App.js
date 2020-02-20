@@ -6,7 +6,7 @@ import "./App.css";
 
 import store from "./store";
 import { loadUser } from "./actions/authActions";
-import Landingpage from "./components/Landingpage";
+import HomePage from "./components/HomePage";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import ForgotPassword from "./components/auth/ForgotPassword";
@@ -22,7 +22,7 @@ function App() {
         <Route path="/register" component={Register} />
         <Route path="/forgotPassword" component={ForgotPassword} />
         <Route path="/reset/:token" component={ResetPassword} />
-        <ProtectedRoute exact path="/" component={Landingpage} />
+        <ProtectedRoute exact path="/" component={HomePage} />
       </Switch>
     </div>
   );

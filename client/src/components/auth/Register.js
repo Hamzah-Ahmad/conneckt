@@ -16,35 +16,12 @@ import { register } from "../../actions/authActions";
 import { clearErrors } from "../../actions/errorActions";
 
 const Register = props => {
-  // state = {
-  //   name: "",
-  //   email: "",
-  //   password: "",
-  //   msg: null
-  // };
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
 
   const { error, isAuthenticated } = props;
-
-  // componentDidUpdate(prevProps) {
-  //   const { error, isAuthenticated } = this.props;
-  //   if (error !== prevProps.error) {
-  //     // Check for register error
-  //     if (error.id === "REGISTER_FAIL") {
-  //       this.setState({ msg: error.msg.msg });
-  //     } else {
-  //       this.setState({ msg: null });
-  //     }
-  //   }
-
-  //   if (isAuthenticated) {
-  //     this.props.history.push("/");
-  //   }
-  // }
 
   useEffect(() => {
     if (error) {
@@ -84,7 +61,7 @@ const Register = props => {
       <div>
         {msg ? <p color="danger">{msg}</p> : null}
         <form onSubmit={onSubmit}>
-          <label for="name">Name</label>
+          <label htmlFor="name">Name</label>
           <input
             type="text"
             name="name"
@@ -94,7 +71,7 @@ const Register = props => {
             onChange={e => setName(e.target.value)}
           />
 
-          <label for="email">Email</label>
+          <label htmlFor="email">Email</label>
           <input
             type="email"
             name="email"
@@ -104,7 +81,7 @@ const Register = props => {
             onChange={e => setEmail(e.target.value)}
           />
 
-          <label for="password">Password</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             name="password"
@@ -113,7 +90,7 @@ const Register = props => {
             className="mb-3"
             onChange={e => setPassword(e.target.value)}
           />
-          <button color="dark" style={{ marginTop: "2rem" }} block>
+          <button color="dark" style={{ marginTop: "2rem" }} block="true">
             Register
           </button>
         </form>

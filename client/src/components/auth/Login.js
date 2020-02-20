@@ -1,37 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+
 import { login } from "../../actions/authActions";
 import { clearErrors } from "../../actions/errorActions";
 
-const Login = props => {
-  // state = {
-  //   modal: false,
-  //   email: "",
-  //   password: "",
-  //   msg: null
-  // };
+const useStyles = makeStyles(theme => ({
+  button: {
+    display: "block"
+  },
+  link: {
+    display: "block",
+    marginTop: theme.spacing(2)
+  },
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginTop: theme.spacing(2)
+  },
+  textField: {
+    marginBottom: theme.spacing(3),
+    width: 320
+  }
+}));
 
+const Login = props => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
   const { error, isAuthenticated } = props;
-
-  // componentDidUpdate(prevProps) {
-  //   const { error, isAuthenticated } = this.props;
-  //   if (error !== prevProps.error) {
-  //     // Check for register error
-  //     if (error.id === "LOGIN_FAIL") {
-  //       this.setState({ msg: error.msg.msg });
-  //     } else {
-  //       this.setState({ msg: null });
-  //     }
-  //   }
-
-  //   if (isAuthenticated) {
-  //     this.props.history.push("/");
-  //   }
-  // }
+  const classes = useStyles();
 
   useEffect(() => {
     if (error) {
@@ -49,10 +52,6 @@ const Login = props => {
     // eslint-disable-next-line
   }, [error, isAuthenticated]);
 
-  // const onChange = e => {
-  //   this.setState({ [e.target.name]: e.target.value });
-  // };
-
   const onSubmit = e => {
     e.preventDefault();
 
@@ -67,36 +66,43 @@ const Login = props => {
   };
 
   return (
-    <div>
+    <div className={classes.root}>
       {msg ? <p color="danger">{msg}</p> : null}
       <form onSubmit={onSubmit}>
-        <label for="email">Email</label>
-        <input
+        <TextField
+          label="Email"
+          variant="outlined"
           type="email"
+          className={classes.textField}
           name="email"
           id="email"
-          placeholder="Email"
-          className="mb-3"
           onChange={e => setEmail(e.target.value)}
         />
-
-        <label for="password">Password</label>
-        <input
+        <br />
+        <TextField
+          label="Outlined"
+          variant="outlined"
           type="password"
           name="password"
           id="password"
-          placeholder="Password"
-          className="mb-3"
+          className={classes.textField}
           onChange={e => setPassword(e.target.value)}
         />
-        <button color="dark" style={{ marginTop: "2rem" }} block>
+        <Button
+          className={classes.button}
+          color="primary"
+          variant="contained"
+          type="submit"
+        >
           Login
-        </button>
+        </Button>
+        <Link className={classes.link} to="/register">
+          Not a member?
+        </Link>
+        <Link className={classes.link} to="/forgotPassword">
+          Forgot Password
+        </Link>
       </form>
-      <Link to="/register">Not a member?</Link>
-      <div style={{ marginTop: "20px" }}>
-        <Link to="/forgotPassword">Forgot Password </Link>
-      </div>
     </div>
   );
 };

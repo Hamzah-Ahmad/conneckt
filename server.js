@@ -21,6 +21,8 @@ mongoose
 app.use("/api/users", require("./routes/api/auth/users"));
 app.use("/api/auth", require("./routes/api/auth/auth"));
 app.use("/api/posts", require("./routes/api/posts"));
+app.use("/api/comments", require("./routes/api/comments"));
+app.use("/api/post/like", require("./routes/api/likes"));
 
 if (process.env.NODE_ENV === "production") {
   //Set Static folder
