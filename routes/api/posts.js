@@ -3,6 +3,9 @@ const router = express.Router();
 const auth = require("../../middleware/auth");
 const Post = require("../../models/Posts");
 
+//@route POST api/posts
+//@desc Making Post
+//@access Private
 router.post("/", auth, async (req, res) => {
   try {
     const newPost = await Post.create({
@@ -16,6 +19,9 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
+//@route POST api/posts
+//@desc Reading All Posts
+//@access Public
 router.get("/", async (req, res) => {
   try {
     await Post.find({})
@@ -26,6 +32,9 @@ router.get("/", async (req, res) => {
   }
 });
 
+//@route POST api/posts/postId
+//@desc Deleting Post
+//@access Private
 //deleteOne/updateOne only delete/update a document while findOneAndDelete/Update return the updated/deleted document
 router.delete("/:postId", auth, async (req, res) => {
   const postId = req.params.postId;
@@ -44,6 +53,9 @@ router.delete("/:postId", auth, async (req, res) => {
   }
 });
 
+//@route POST api/posts/postId
+//@desc Reading All Posts
+//@access Private
 router.patch("/:postId", auth, async (req, res) => {
   const postId = req.params.postId;
   const post = await Post.findOne({ _id: postId });
