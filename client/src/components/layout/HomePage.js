@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getPosts } from "../actions/postActions";
+import { getPosts } from "../../actions/postActions";
 import AppNavbar from "./AppNavbar";
 
 const HomePage = props => {

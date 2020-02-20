@@ -1,5 +1,5 @@
 import React from "react";
-import { logout } from "../actions/authActions";
+import { logout } from "../../actions/authActions";
 import { connect } from "react-redux";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,6 +11,9 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles(theme => ({
+  button: {
+    justifyContent: "flex-start"
+  },
   root: {
     flexGrow: 1
   },
@@ -39,11 +42,15 @@ const AppNavbar = props => {
           >
             <MenuIcon />
           </IconButton> */}
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h4" className={classes.title}>
             Connekt
           </Typography>
           <Typography>Hamzah Ahmad</Typography>
-          <Button color="inherit" onClick={props.logout}>
+          <Button
+            color="inherit"
+            onClick={props.logout}
+            className={classes.button}
+          >
             <ExitToAppIcon />
           </Button>
         </Toolbar>

@@ -6,7 +6,7 @@ import "./App.css";
 
 import store from "./store";
 import { loadUser } from "./actions/authActions";
-import HomePage from "./components/HomePage";
+import HomePage from "./components/layout/HomePage";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import ForgotPassword from "./components/auth/ForgotPassword";
