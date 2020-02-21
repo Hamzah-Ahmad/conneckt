@@ -11,7 +11,7 @@ router.post("/", auth, async (req, res) => {
     const newPost = await Post.create({
       title: req.body.title,
       content: req.body.content,
-      author: req.user.id
+      author: req.user._id
     });
     res.json(newPost);
   } catch (err) {
@@ -40,8 +40,8 @@ router.delete("/:postId", auth, async (req, res) => {
   const postId = req.params.postId;
   const post = await Post.findOne({ _id: postId });
   // res.json(typeof post.author.toString());
-
-  if (req.user.id == post.author.toString()) {
+  if (!post) return res.status(404).json({ msg: "Post not found" });
+  if (req.user._id == post.author.toString()) {
     try {
       await post.remove();
       res.json("Deleted Post");
@@ -59,7 +59,8 @@ router.delete("/:postId", auth, async (req, res) => {
 router.patch("/:postId", auth, async (req, res) => {
   const postId = req.params.postId;
   const post = await Post.findOne({ _id: postId });
-  if (req.user.id == post.author.toString()) {
+  if (!post) return res.status(404).json({ msg: "Post not found" });
+  if (req.user._id == post.author.toString()) {
     post.content = req.body.content;
     post.save().then(updatedPost => res.json(updatedPost));
   } else {

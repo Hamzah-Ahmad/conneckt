@@ -12,14 +12,14 @@ router.post("/:postId", auth, async (req, res) => {
   const post = await Post.findById(req.params.postId);
   try {
     const newComment = await new Comment({
-      author: req.user.id,
+      author: req.user._id,
       authorName: req.user.name,
       commentText: req.body.commentText,
       post: post._id
     });
     post.comments.push(newComment);
     post.save();
-    res.json(newComment);
+    res.json(post.comments);
   } catch (err) {
     res.send("Error at eomment.js " + err);
   }
@@ -32,8 +32,8 @@ router.delete("/:postId/:commentId", auth, async (req, res) => {
   Post.findById(req.params.postId).then(post => {
     const comment = post.comments.id(req.params.commentId);
     if (
-      req.user.id === post.author.toString() ||
-      req.user.id === comment.author.toString()
+      req.user._id === post.author.toString() ||
+      req.user._id === comment.author.toString()
     ) {
       comment.remove();
       post.save((err, post) => {

@@ -10,10 +10,10 @@ const Post = require("../../models/Posts");
 router.post("/:postId", auth, async (req, res) => {
   const post = await Post.findById(req.params.postId);
   try {
-    if (post.likes.includes(req.user.id)) {
-      post.likes = post.likes.filter(like => like.toString() !== req.user.id);
+    if (post.likes.includes(req.user._id)) {
+      post.likes = post.likes.filter(like => like.toString() !== req.user._id);
     } else {
-      post.likes.push(req.user.id);
+      post.likes.push(req.user._id);
     }
     post.save();
     res.json(post);

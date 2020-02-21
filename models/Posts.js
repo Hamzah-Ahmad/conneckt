@@ -1,9 +1,6 @@
 const mongoose = require("mongoose");
 const { CommentSchema } = require("../models/Comment");
 const PostSchema = new mongoose.Schema({
-  title: {
-    type: String
-  },
   content: {
     type: String
   },

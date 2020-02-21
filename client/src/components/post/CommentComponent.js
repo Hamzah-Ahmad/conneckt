@@ -1,8 +1,14 @@
 import React from "react";
-
 import { makeStyles } from "@material-ui/core/styles";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 
 const useStyles = makeStyles(theme => ({
+  closeIcon: {
+    fontSize: "12px",
+    color: "#949494",
+    alignSelf: "flex-start"
+  },
   comment: {
     borderRadius: "20px",
     border: "1px solid grey",
@@ -35,18 +41,33 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const CommentComponent = ({ comment, post, auth }) => {
+const CommentComponent = ({ comment, post, auth, deleteComment }) => {
   const classes = useStyles();
-
+  React.useEffect(() => {
+    // console.log(auth.user._id === comment.author);
+    // console.log(typeof auth.user._id);
+    // console.log(typeof comment.author);
+    // console.log(post);
+    // console.log(comment);
+  });
   return (
-    <div className={classes.comment} key={comment._id}>
+    <div className={classes.comment}>
       <div className={classes.commentMaterial}>
         <div className={classes.commentAuthor}>{comment.authorName}</div>
         <div className={classes.commentText}>{comment.commentText}</div>
       </div>
       <div>
-        {auth.user._id == post.author._id || auth.user._id == comment.author ? (
-          <small className={classes.commentDltBtn}>Remove</small>
+        {auth.user._id === post.author._id ||
+        auth.user._id === comment.author ? (
+          <small className={classes.commentDltBtn}>
+            <IconButton
+              onClick={() => {
+                deleteComment(post._id, comment._id);
+              }}
+            >
+              <CloseIcon className={classes.closeIcon} />
+            </IconButton>
+          </small>
         ) : null}
       </div>
     </div>

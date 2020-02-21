@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { postComment } from "../../actions/commentActions";
+import { postComment, deleteComment } from "../../actions/commentActions";
 import { connect } from "react-redux";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -81,6 +81,7 @@ const PostComponent = props => {
             post={props.post}
             auth={props.auth}
             key={comment._id}
+            deleteComment={props.deleteComment}
           />
         ))}
       </div>
@@ -92,4 +93,6 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { postComment })(PostComponent);
+export default connect(mapStateToProps, { postComment, deleteComment })(
+  PostComponent
+);
