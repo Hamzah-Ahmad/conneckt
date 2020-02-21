@@ -27,7 +27,7 @@ router.post("/", (req, res) => {
       if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
 
       jwt.sign(
-        { id: user.id, name: user.name },
+        { _id: user.id, name: user.name },
         process.env.JWT_SECRET,
         { expiresIn: 36000 },
         (err, token) => {
@@ -35,7 +35,7 @@ router.post("/", (req, res) => {
           res.json({
             token,
             user: {
-              id: user.id,
+              _id: user.id,
               name: user.name,
               email: user.email
             }
@@ -148,7 +148,7 @@ router.put("/updatePasswordViaEmail", (req, res, next) => {
 //@desc get user data
 //@access Private
 router.get("/user", auth, (req, res) => {
-  User.findById(req.user.id)
+  User.findById(req.user._id)
     .select("-password")
     .then(user => res.json(user));
 });

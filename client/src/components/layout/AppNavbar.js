@@ -27,9 +27,6 @@ const useStyles = makeStyles(theme => ({
 
 const AppNavbar = props => {
   const classes = useStyles();
-
-  const { user } = props;
-
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -45,7 +42,7 @@ const AppNavbar = props => {
           <Typography variant="h4" className={classes.title}>
             Connekt
           </Typography>
-          <Typography>Hamzah Ahmad</Typography>
+          <Typography>{props.auth.user && props.auth.user.name}</Typography>
           <Button
             color="inherit"
             onClick={props.logout}

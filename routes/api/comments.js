@@ -11,7 +11,7 @@ const Post = require("../../models/Posts");
 router.post("/:postId", auth, async (req, res) => {
   const post = await Post.findById(req.params.postId);
   try {
-    const newComment = await Comment.create({
+    const newComment = await new Comment({
       author: req.user.id,
       authorName: req.user.name,
       commentText: req.body.commentText,
@@ -19,7 +19,7 @@ router.post("/:postId", auth, async (req, res) => {
     });
     post.comments.push(newComment);
     post.save();
-    res.json(post);
+    res.json(newComment);
   } catch (err) {
     res.send("Error at eomment.js " + err);
   }
@@ -28,7 +28,7 @@ router.post("/:postId", auth, async (req, res) => {
 //@route DELETE api/comments/postId/commentId
 //@desc Making a comment on a post
 //@access Private
-router.get("/:postId/:commentId", auth, async (req, res) => {
+router.delete("/:postId/:commentId", auth, async (req, res) => {
   Post.findById(req.params.postId).then(post => {
     const comment = post.comments.id(req.params.commentId);
     if (

@@ -25,8 +25,8 @@ router.post("/", auth, async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     await Post.find({})
-      // .populate("author")
-      .then(posts => res.json(posts));
+      .populate("author")
+      .exec((err, posts) => res.json(posts));
   } catch (err) {
     res.send(`Error occured at post GET routes: ${err}`);
   }
