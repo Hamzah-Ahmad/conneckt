@@ -7,6 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import InputIcon from "@material-ui/icons/Input";
+import CommentComponent from "./CommentComponent";
 
 const useStyles = makeStyles(theme => ({
   comment: {
@@ -42,13 +43,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PostComponent = props => {
-  // console.log(props);
-  // React.useEffect(() => {
-  //   console.log(props.auth);
-  // }, [props.comments]);
   const classes = useStyles();
   const [commentText, setCommentText] = useState("");
-  const [delBtnState, setDltBtnState] = useState("");
   return (
     <div className={classes.post}>
       <div className={classes.title}>{props.post.author.name}</div>
@@ -80,18 +76,12 @@ const PostComponent = props => {
       />
       <div>
         {props.post.comments.map(comment => (
-          <div className={classes.comment} key={comment._id}>
-            <div className={classes.commentMaterial}>
-              <div className={classes.commentAuthor}>{comment.authorName}</div>
-              <div className={classes.commentText}>{comment.commentText}</div>
-            </div>
-            <div>
-              {props.auth.user._id == props.post.author._id ||
-              props.auth.user._id == comment.author ? (
-                <small className={classes.commentDltBtn}>Remove</small>
-              ) : null}
-            </div>
-          </div>
+          <CommentComponent
+            comment={comment}
+            post={props.post}
+            auth={props.auth}
+            key={comment._id}
+          />
         ))}
       </div>
     </div>
