@@ -43,13 +43,6 @@ const useStyles = makeStyles(theme => ({
 
 const CommentComponent = ({ comment, post, auth, deleteComment }) => {
   const classes = useStyles();
-  React.useEffect(() => {
-    // console.log(auth.user._id === comment.author);
-    // console.log(typeof auth.user._id);
-    // console.log(typeof comment.author);
-    // console.log(post);
-    // console.log(comment);
-  });
   return (
     <div className={classes.comment}>
       <div className={classes.commentMaterial}>

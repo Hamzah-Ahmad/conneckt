@@ -41,7 +41,7 @@ const PostTextBox = props => {
           setPostText("");
         }}
       >
-        Submit
+        Post
       </Button>
       <div style={{ clear: "right" }}></div>
     </div>
