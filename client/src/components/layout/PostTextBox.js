@@ -28,14 +28,18 @@ const PostTextBox = props => {
         className={classes.postTextBox}
         variant="outlined"
         id="newPostBox"
-        placeholder="Make a Post!"
+        placeholder="Share your thoughts"
+        value={postText}
         onChange={e => setPostText(e.target.value)}
       ></TextField>
       <Button
         variant="contained"
         color="primary"
         className={classes.submitBtn}
-        onClick={() => props.makePost(postText)}
+        onClick={() => {
+          props.makePost(postText);
+          setPostText("");
+        }}
       >
         Submit
       </Button>

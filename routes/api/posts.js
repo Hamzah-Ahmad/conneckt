@@ -35,7 +35,6 @@ router.get("/", async (req, res) => {
 //@route POST api/posts/postId
 //@desc Deleting Post
 //@access Private
-//deleteOne/updateOne only delete/update a document while findOneAndDelete/Update return the updated/deleted document
 router.delete("/:postId", auth, async (req, res) => {
   const postId = req.params.postId;
   const post = await Post.findOne({ _id: postId });
