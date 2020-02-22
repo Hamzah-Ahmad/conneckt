@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   post: {
     border: "1px solid grey",
     padding: theme.spacing(2),
-    margin: theme.spacing(2)
+    marginTop: theme.spacing(4)
   },
 
   title: {
@@ -47,9 +47,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PostComponent = props => {
-  // React.useEffect(() => {
-  //   console.log(props.post.likes.includes(props.auth.user._id));
-  // });
   const classes = useStyles();
   const [commentText, setCommentText] = useState("");
   return (

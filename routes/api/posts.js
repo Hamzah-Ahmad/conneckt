@@ -9,7 +9,6 @@ const Post = require("../../models/Posts");
 router.post("/", auth, async (req, res) => {
   try {
     const newPost = await Post.create({
-      title: req.body.title,
       content: req.body.content,
       author: req.user._id
     });
@@ -25,6 +24,7 @@ router.post("/", auth, async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     await Post.find({})
+      .sort({ date_posted: -1 })
       .populate("author")
       .exec((err, posts) => res.json(posts));
   } catch (err) {

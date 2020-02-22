@@ -14,7 +14,11 @@ const PostSchema = new mongoose.Schema({
       ref: "User"
     }
   ],
-  comments: [CommentSchema]
+  comments: [CommentSchema],
+  date_posted: {
+    type: Date,
+    default: Date.now()
+  }
 });
 
 const Post = mongoose.model("Post", PostSchema);

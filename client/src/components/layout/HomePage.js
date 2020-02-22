@@ -5,12 +5,13 @@ import AppNavbar from "./AppNavbar";
 import PostComponent from "../post/PostComponent";
 
 import Container from "@material-ui/core/Container";
+import PostTextBox from "./PostTextBox";
 
 const HomePage = props => {
   React.useEffect(() => {
     props.getPosts();
     // eslint-disable-next-line
-  }, [props.comments, props.likes]);
+  }, [props.comments, props.likes, props.singlePost]);
   const posts = props.posts.posts;
   const { isAuthenticated } = props.auth;
   return (
@@ -22,6 +23,7 @@ const HomePage = props => {
         ) : null}
 
         <div>
+          <PostTextBox />
           {posts &&
             posts.map(post => (
               <div key={post._id}>
@@ -38,7 +40,8 @@ const mapStateToProps = state => ({
   auth: state.auth,
   posts: state.posts,
   comments: state.comments,
-  likes: state.likes
+  likes: state.likes,
+  singlePost: state.singlePost
 });
 
 export default connect(mapStateToProps, { getPosts })(HomePage);
