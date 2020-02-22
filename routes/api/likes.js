@@ -9,6 +9,7 @@ const Post = require("../../models/Posts");
 //@access Private
 router.post("/:postId", auth, async (req, res) => {
   const post = await Post.findById(req.params.postId);
+  if (!post) return res.status(404).json({ msg: "Post not found" });
   try {
     if (post.likes.includes(req.user._id)) {
       post.likes = post.likes.filter(like => like.toString() !== req.user._id);
@@ -16,7 +17,7 @@ router.post("/:postId", auth, async (req, res) => {
       post.likes.push(req.user._id);
     }
     post.save();
-    res.json(post);
+    res.json(post.likes);
   } catch (err) {
     res.send("Error at likes.js " + err);
   }
