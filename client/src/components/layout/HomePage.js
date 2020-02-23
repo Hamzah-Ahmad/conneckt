@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import Pusher from "pusher-js";
 import { getPosts } from "../../actions/postActions";
 import AppNavbar from "./AppNavbar";
 import PostComponent from "../post/PostComponent";
@@ -8,8 +9,19 @@ import Container from "@material-ui/core/Container";
 import PostTextBox from "./PostTextBox";
 
 const HomePage = props => {
+  // Pusher.logToConsole = true;
+
   React.useEffect(() => {
     props.getPosts();
+    var pusher = new Pusher("fc9be82df2acb3b15348", {
+      cluster: "us2",
+      forceTLS: true
+    });
+
+    var channel = pusher.subscribe("connekt");
+    channel.bind("liked_post", function(data) {
+      console.log(JSON.stringify(data.message));
+    });
     // eslint-disable-next-line
   }, [props.comments, props.likes, props.singlePost]);
   const posts = props.posts.posts;

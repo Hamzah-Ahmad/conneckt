@@ -6,21 +6,21 @@ import { deletePost, editPost } from "../../actions/postActions";
 import { connect } from "react-redux";
 
 import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import GradeOutlinedIcon from "@material-ui/icons/GradeOutlined";
-import GradeIcon from "@material-ui/icons/Grade";
+import CommentBoxComponent from "./CommentBoxComponent";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import ChatOutlinedIcon from "@material-ui/icons/ChatOutlined";
 import EmojiEmotionsIcon from "@material-ui/icons/EmojiEmotions";
 
-import KeyboardArrowRightOutlinedIcon from "@material-ui/icons/KeyboardArrowRightOutlined";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import CommentComponent from "./CommentComponent";
-import CommentBoxComponent from "./CommentBoxComponent";
+// import KeyboardArrowRightOutlinedIcon from "@material-ui/icons/KeyboardArrowRightOutlined";
+// import CommentComponent from "./CommentComponent";
+// import InputAdornment from "@material-ui/core/InputAdornment";
+// import GradeOutlinedIcon from "@material-ui/icons/GradeOutlined";
+// import GradeIcon from "@material-ui/icons/Grade";
+// import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles(theme => ({
   comment: {
@@ -70,7 +70,7 @@ const PostComponent = props => {
   const classes = useStyles();
 
   //Simple Menu
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -79,10 +79,10 @@ const PostComponent = props => {
   };
 
   //Edit Post Dialog
-  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   //Comments Modal
-  const [commentDialogOpen, setCommentOpen] = React.useState(false);
+  const [commentDialogOpen, setCommentOpen] = useState(false);
 
   return (
     <div className={classes.post}>

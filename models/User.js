@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const { NotificationSchema } = require("../models/Notification");
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -14,6 +14,13 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  connections: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    }
+  ],
+  notifications: [NotificationSchema],
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   register_date: {

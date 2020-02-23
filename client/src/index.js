@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 // import { blue, indigo } from "@material-ui/core/colors";
+
 import store from "./store";
 
 const innerTheme = createMuiTheme({
