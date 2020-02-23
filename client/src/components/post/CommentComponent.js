@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { deleteComment } from "../../actions/commentActions";
+
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
@@ -12,10 +15,11 @@ const useStyles = makeStyles(theme => ({
   comment: {
     borderRadius: "20px",
     border: "1px solid grey",
-    marginTop: theme.spacing(2),
     padding: theme.spacing(1),
     background: "#fff",
-    display: "flex"
+    display: "flex",
+    width: "92.5%",
+    margin: "16px auto"
   },
   commentAuthor: {
     fontSize: "12px"
@@ -43,6 +47,7 @@ const useStyles = makeStyles(theme => ({
 
 const CommentComponent = ({ comment, post, auth, deleteComment }) => {
   const classes = useStyles();
+  const [disableBtn, setDisableBtn] = useState(false);
   return (
     <div className={classes.comment}>
       <div className={classes.commentMaterial}>
@@ -55,8 +60,10 @@ const CommentComponent = ({ comment, post, auth, deleteComment }) => {
           <small className={classes.commentDltBtn}>
             <IconButton
               onClick={() => {
+                setDisableBtn(true);
                 deleteComment(post._id, comment._id);
               }}
+              disabled={disableBtn}
             >
               <CloseIcon className={classes.closeIcon} />
             </IconButton>
@@ -67,4 +74,4 @@ const CommentComponent = ({ comment, post, auth, deleteComment }) => {
   );
 };
 
-export default CommentComponent;
+export default connect(null, { deleteComment })(CommentComponent);

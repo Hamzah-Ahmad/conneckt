@@ -14,11 +14,13 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import GradeOutlinedIcon from "@material-ui/icons/GradeOutlined";
 import GradeIcon from "@material-ui/icons/Grade";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
+import ChatOutlinedIcon from "@material-ui/icons/ChatOutlined";
 import EmojiEmotionsIcon from "@material-ui/icons/EmojiEmotions";
 
 import KeyboardArrowRightOutlinedIcon from "@material-ui/icons/KeyboardArrowRightOutlined";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import CommentComponent from "./CommentComponent";
+import CommentBoxComponent from "./CommentBoxComponent";
 
 const useStyles = makeStyles(theme => ({
   comment: {
@@ -66,7 +68,6 @@ const useStyles = makeStyles(theme => ({
 
 const PostComponent = props => {
   const classes = useStyles();
-  const [commentText, setCommentText] = useState("");
 
   //Simple Menu
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -79,6 +80,9 @@ const PostComponent = props => {
 
   //Edit Post Dialog
   const [dialogOpen, setDialogOpen] = React.useState(false);
+
+  //Comments Modal
+  const [commentDialogOpen, setCommentOpen] = React.useState(false);
 
   return (
     <div className={classes.post}>
@@ -139,42 +143,20 @@ const PostComponent = props => {
         )}
       </IconButton>
       <small>{props.post.likes.length}</small>
-      <TextField
-        fullWidth
-        multiline={true}
-        variant="outlined"
-        id="commentTextField"
-        value={commentText}
-        placeholder="Add a comment"
-        onChange={e => setCommentText(e.target.value)}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton
-                onClick={() => {
-                  if (commentText) {
-                    props.postComment(props.post._id, commentText);
-                    setCommentText("");
-                  }
-                }}
-              >
-                <KeyboardArrowRightOutlinedIcon />
-              </IconButton>
-            </InputAdornment>
-          )
+      <IconButton
+        onClick={() => {
+          setCommentOpen(true);
         }}
+      >
+        <ChatOutlinedIcon />
+      </IconButton>
+      <small>{props.post.comments.length}</small>
+
+      <CommentBoxComponent
+        {...props}
+        commentDialogOpen={commentDialogOpen}
+        setCommentOpen={setCommentOpen}
       />
-      <div>
-        {props.post.comments.map(comment => (
-          <CommentComponent
-            comment={comment}
-            post={props.post}
-            auth={props.auth}
-            key={comment._id}
-            deleteComment={props.deleteComment}
-          />
-        ))}
-      </div>
     </div>
   );
 };

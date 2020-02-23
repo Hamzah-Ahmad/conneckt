@@ -10,6 +10,7 @@ const Post = require("../../models/Posts");
 //@access Private
 router.post("/:postId", auth, async (req, res) => {
   const post = await Post.findById(req.params.postId);
+  if (!post) return res.status(401).json({ msg: "Post not found" });
   try {
     const newComment = await new Comment({
       author: req.user._id,
@@ -30,6 +31,7 @@ router.post("/:postId", auth, async (req, res) => {
 //@access Private
 router.delete("/:postId/:commentId", auth, async (req, res) => {
   Post.findById(req.params.postId).then(post => {
+    if (!post) return res.status(401).json({ msg: "Post not found" });
     const comment = post.comments.id(req.params.commentId);
     if (
       req.user._id === post.author.toString() ||
