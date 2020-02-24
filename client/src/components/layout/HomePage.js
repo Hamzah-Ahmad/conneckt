@@ -10,7 +10,7 @@ import PostTextBox from "./PostTextBox";
 
 const HomePage = props => {
   // Pusher.logToConsole = true;
-
+  console.log(props);
   React.useEffect(() => {
     props.getPosts();
     var pusher = new Pusher("fc9be82df2acb3b15348", {
@@ -18,9 +18,9 @@ const HomePage = props => {
       forceTLS: true
     });
 
-    var channel = pusher.subscribe("connekt");
+    var channel = pusher.subscribe(`${props.auth.user._id}`);
     channel.bind("liked_post", function(data) {
-      console.log(JSON.stringify(data.message));
+      console.log(JSON.stringify(data));
     });
     // eslint-disable-next-line
   }, [props.comments, props.likes, props.singlePost]);

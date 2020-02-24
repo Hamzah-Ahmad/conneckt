@@ -17,7 +17,6 @@ import axios from "axios";
 export const loadUser = () => (dispatch, getState) => {
   //User Loading --> sets isLoading to true
   dispatch({ type: USER_LOADING });
-
   axios
     .get("/api/auth/user", tokenConfig(getState))
     .then(res =>
