@@ -21,7 +21,9 @@ router.post("/", (req, res) => {
     const newUser = new User({
       name,
       email,
-      password
+      password,
+      connections: [],
+      notifications: []
     });
 
     //Create salt and hashed password
@@ -41,7 +43,9 @@ router.post("/", (req, res) => {
                 user: {
                   _id: user.id,
                   name: user.name,
-                  email: user.email
+                  email: user.email,
+                  connections: user.connections,
+                  notifications: user.notifications
                 }
               });
             }

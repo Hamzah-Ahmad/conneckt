@@ -34,12 +34,11 @@ router.post("/:postId", auth, async (req, res) => {
         text: `Someone liked your post`,
         post: post
       });
-      console.log(postAuthor);
+      // console.log(postAuthor);
       postAuthor.notifications.push(notif);
-      postAuthor.save().then(post => {
-        pusher.trigger(`${postAuthor._id}`, "liked_post", {
-          notif: notif
-        });
+      await postAuthor.save();
+      pusher.trigger(`${postAuthor._id}`, "liked_post", {
+        notif: notif
       });
     }
     post.save().then(post => {

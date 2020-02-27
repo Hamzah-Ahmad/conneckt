@@ -1,34 +1,31 @@
 import React from "react";
 import { connect } from "react-redux";
-import Pusher from "pusher-js";
 import { getPosts } from "../../actions/postActions";
+import { getNotifications } from "../../actions/notificationsActions";
 import AppNavbar from "./AppNavbar";
 import PostComponent from "../post/PostComponent";
-
-import Container from "@material-ui/core/Container";
 import PostTextBox from "./PostTextBox";
+import Container from "@material-ui/core/Container";
 
 const HomePage = props => {
-  // Pusher.logToConsole = true;
-  console.log(props);
   React.useEffect(() => {
+    console.log(props);
+    console.log(props.notifications);
     props.getPosts();
-    var pusher = new Pusher("fc9be82df2acb3b15348", {
-      cluster: "us2",
-      forceTLS: true
-    });
 
-    var channel = pusher.subscribe(`${props.auth.user._id}`);
-    channel.bind("liked_post", function(data) {
-      console.log(JSON.stringify(data));
-    });
     // eslint-disable-next-line
   }, [props.comments, props.likes, props.singlePost]);
+
+  // React.useEffect(() => {
+  //   console.log("get notifications");
+  //   props.getNotifications();
+  // });
   const posts = props.posts.posts;
   const { isAuthenticated } = props.auth;
   return (
     <div>
       <AppNavbar />
+
       <Container maxWidth="sm">
         {props.location.state && !isAuthenticated ? (
           <p color="danger">{props.location.state.msg}</p>
@@ -53,7 +50,10 @@ const mapStateToProps = state => ({
   posts: state.posts,
   comments: state.comments,
   likes: state.likes,
-  singlePost: state.singlePost
+  singlePost: state.singlePost,
+  notifications: state.notifications
 });
 
-export default connect(mapStateToProps, { getPosts })(HomePage);
+export default connect(mapStateToProps, { getPosts, getNotifications })(
+  HomePage
+);

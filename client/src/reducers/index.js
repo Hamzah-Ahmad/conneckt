@@ -4,6 +4,7 @@ import authErrorReducer from "./authErrorReducer";
 import postReducer from "./postReducer";
 import commentReducer from "./commentReducer";
 import likeReducer from "./likeReducer";
+import notificationReducer from "./notificationReducer";
 import singlePostReducer from "./singlePostReducer";
 
 export default combineReducers({
@@ -12,5 +13,6 @@ export default combineReducers({
   posts: postReducer,
   singlePost: singlePostReducer,
   comments: commentReducer,
-  likes: likeReducer
+  likes: likeReducer,
+  notifications: notificationReducer
 });

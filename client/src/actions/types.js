@@ -15,3 +15,4 @@ export const DELETE_POST = "DELETE_POST";
 export const POST_COMMENT = "POST_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
 export const LIKE_POST = "LIKE_POST";
+export const GET__NOTIFICATIONS = "GET__NOTIFICATIONS";
