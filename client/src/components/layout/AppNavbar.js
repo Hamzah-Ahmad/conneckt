@@ -3,6 +3,7 @@ import { logout } from "../../actions/authActions";
 import { getNotifications } from "../../actions/notificationsActions";
 import { connect } from "react-redux";
 import Pusher from "pusher-js";
+import { Link } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -87,8 +88,22 @@ const AppNavbar = props => {
             onClose={handleClose}
           >
             {props.notifications.notifications.map(notif => (
-              <MenuItem onClick={handleClose} key={notif._id}>
+              <MenuItem
+                onClick={() => {
+                  console.log(notif);
+                  handleClose();
+                }}
+                key={notif._id}
+              >
                 {notif.text}
+                <Link
+                  to={{
+                    pathname: `/post/${notif.post}`
+                    // state: { post: notif.post }
+                  }}
+                >
+                  See More
+                </Link>
               </MenuItem>
             ))}
           </Menu>

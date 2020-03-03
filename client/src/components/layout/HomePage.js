@@ -6,11 +6,12 @@ import AppNavbar from "./AppNavbar";
 import PostComponent from "../post/PostComponent";
 import PostTextBox from "./PostTextBox";
 import Container from "@material-ui/core/Container";
+import { Link } from "react-router-dom";
 
 const HomePage = props => {
   React.useEffect(() => {
-    console.log(props);
-    console.log(props.notifications);
+    // console.log(props);
+    // console.log(props.notifications);
     props.getPosts();
 
     // eslint-disable-next-line

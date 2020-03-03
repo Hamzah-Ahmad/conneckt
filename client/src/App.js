@@ -11,6 +11,7 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import ForgotPassword from "./components/auth/ForgotPassword";
 import ResetPassword from "./components/auth/ResetPassword";
+import PostPage from "./components/layout/PostPage";
 function App() {
   useEffect(() => {
     store.dispatch(loadUser());
@@ -24,6 +25,7 @@ function App() {
         <Route path="/forgotPassword" component={ForgotPassword} />
         <Route path="/reset/:token" component={ResetPassword} />
         <ProtectedRoute exact path="/" component={HomePage} />
+        <ProtectedRoute path="/post/:postId" component={PostPage} />
       </Switch>
     </div>
   );

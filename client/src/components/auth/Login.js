@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+
+import Spinner from "../layout/Spinner";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -33,7 +35,8 @@ const Login = props => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
-  const { error, isAuthenticated } = props;
+
+  const { error, isAuthenticated, isLoading } = props;
   const classes = useStyles();
 
   useEffect(() => {
@@ -50,7 +53,7 @@ const Login = props => {
       props.history.push("/");
     }
     // eslint-disable-next-line
-  }, [error, isAuthenticated]);
+  }, [error, isAuthenticated, isLoading]);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -68,48 +71,53 @@ const Login = props => {
   return (
     <div className={classes.root}>
       {msg ? <p color="danger">{msg}</p> : null}
-      <form onSubmit={onSubmit}>
-        <TextField
-          label="Email"
-          variant="outlined"
-          type="email"
-          className={classes.textField}
-          name="email"
-          id="email"
-          onChange={e => setEmail(e.target.value)}
-        />
-        <br />
-        <TextField
-          label="Password"
-          variant="outlined"
-          type="password"
-          name="password"
-          id="password"
-          className={classes.textField}
-          onChange={e => setPassword(e.target.value)}
-        />
+      {props.isLoading ? (
+        <Spinner />
+      ) : (
+        <form onSubmit={onSubmit}>
+          <TextField
+            label="Email"
+            variant="outlined"
+            type="email"
+            className={classes.textField}
+            name="email"
+            id="email"
+            onChange={e => setEmail(e.target.value)}
+          />
+          <br />
+          <TextField
+            label="Password"
+            variant="outlined"
+            type="password"
+            name="password"
+            id="password"
+            className={classes.textField}
+            onChange={e => setPassword(e.target.value)}
+          />
 
-        <Button
-          className={classes.button}
-          color="primary"
-          variant="contained"
-          type="submit"
-        >
-          Login
-        </Button>
-        <Link className={classes.link} to="/register">
-          Not a member?
-        </Link>
-        <Link className={classes.link} to="/forgotPassword">
-          Forgot Password
-        </Link>
-      </form>
+          <Button
+            className={classes.button}
+            color="primary"
+            variant="contained"
+            type="submit"
+          >
+            Login
+          </Button>
+          <Link className={classes.link} to="/register">
+            Not a member?
+          </Link>
+          <Link className={classes.link} to="/forgotPassword">
+            Forgot Password
+          </Link>
+        </form>
+      )}
     </div>
   );
 };
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
+  isLoading: state.auth.isLoading,
   error: state.error
 });
 

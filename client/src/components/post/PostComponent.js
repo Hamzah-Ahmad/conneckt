@@ -25,7 +25,7 @@ import EmojiEmotionsIcon from "@material-ui/icons/EmojiEmotions";
 const useStyles = makeStyles(theme => ({
   comment: {
     borderRadius: "20px",
-    border: "1px solid grey",
+    // border: "1px solid grey",
     marginTop: theme.spacing(2),
     padding: theme.spacing(1),
     background: "#fff",

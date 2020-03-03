@@ -1,4 +1,6 @@
 import React from "react";
+import Spinner from "../layout/Spinner";
+
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -6,12 +8,14 @@ import { connect } from "react-redux";
 //...rest and ...props used below is sometimes referred to as react ...props syntax. You can find info about it at https://www.robinwieruch.de/react-pass-props-to-component under the react ...props syntax heading
 //The render function used below is Router's render function
 const ProtectedRoute = ({ component: Component, auth, ...rest }) => {
-  const { isAuthenticated } = auth;
+  const { isAuthenticated, isLoading } = auth;
   return (
     <Route
       {...rest}
       render={props => {
-        if (isAuthenticated) {
+        if (isLoading) {
+          return <Spinner />;
+        } else if (isAuthenticated) {
           return <Component {...props} />;
         } else {
           return (

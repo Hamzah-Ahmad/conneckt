@@ -13,13 +13,11 @@ const useStyles = makeStyles(theme => ({
     alignSelf: "flex-start"
   },
   comment: {
-    borderRadius: "20px",
-    border: "1px solid grey",
-    padding: theme.spacing(1),
-    background: "#fff",
+    // borderRadius: "20px",
+    // borderBottom: "1px solid grey",
+    padding: theme.spacing(0.5),
     display: "flex",
-    width: "92.5%",
-    margin: "16px auto"
+    margin: "12px 0"
   },
   commentAuthor: {
     fontSize: "12px"

@@ -8,26 +8,29 @@ import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import CommentComponent from "./CommentComponent";
 import KeyboardArrowRightOutlinedIcon from "@material-ui/icons/KeyboardArrowRightOutlined";
-import Dialog from "@material-ui/core/Dialog";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 
 const useStyles = makeStyles(theme => ({
+  expansionPanel: {
+    // background: "skyblue",
+    boxShadow: "none",
+    border: "none",
+    marginLeft: "0",
+    paddingLeft: "0px"
+  },
   textField: {
-    width: "95%",
-    margin: "auto",
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1)
   }
 }));
 const CommentBoxComponent = props => {
   const classes = useStyles();
   const [commentText, setCommentText] = useState("");
+  const [expanded, setExpanded] = useState(false);
   return (
-    <Dialog
-      onClose={() => props.setCommentOpen(false)}
-      aria-labelledby="simple-dialog-title"
-      open={props.commentDialogOpen}
-      fullWidth
-      className={classes.commentModal}
-    >
+    <React.Fragment>
       <TextField
         fullWidth
         multiline={true}
@@ -54,7 +57,19 @@ const CommentBoxComponent = props => {
           )
         }}
       />
-      <div>
+      <ExpansionPanel
+        className={classes.expansionPanel}
+        onChange={() => setExpanded(!expanded)}
+      >
+        <ExpansionPanelSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <small className="expansion-header">
+            {expanded ? "Hide Comments" : "View Comments"}
+          </small>
+        </ExpansionPanelSummary>
         {props.post.comments.map(comment => (
           <CommentComponent
             comment={comment}
@@ -64,8 +79,8 @@ const CommentBoxComponent = props => {
             deleteComment={props.deleteComment}
           />
         ))}
-      </div>
-    </Dialog>
+      </ExpansionPanel>
+    </React.Fragment>
   );
 };
 

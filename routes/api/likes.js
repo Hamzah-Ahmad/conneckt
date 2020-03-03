@@ -31,7 +31,7 @@ router.post("/:postId", auth, async (req, res) => {
       post.likes.push(req.user._id);
       const notif = await new Notification({
         user: req.user._id,
-        text: `Someone liked your post`,
+        text: `${req.user.name} liked your post`,
         post: post
       });
       // console.log(postAuthor);

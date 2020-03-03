@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
+const Post = require("../models/Posts");
+
 const NotificationSchema = new mongoose.Schema({
-  from_user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
-  },
+  // from_user: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "User"
+  // },
   text: {
     type: String,
     required: true

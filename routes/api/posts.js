@@ -18,8 +18,8 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-//@route POST api/posts
-//@desc Reading All Posts
+//@route GET api/posts
+//@desc Getting All Posts
 //@access Public
 router.get("/", async (req, res) => {
   try {
@@ -27,6 +27,18 @@ router.get("/", async (req, res) => {
       .sort({ date_posted: -1 })
       .populate("author")
       .exec((err, posts) => res.json(posts));
+  } catch (err) {
+    res.send(`Error occured at post GET routes: ${err}`);
+  }
+});
+//@route GET api/posts/postId
+//@desc Reading All Posts
+//@access Public
+router.get("/:postId", async (req, res) => {
+  try {
+    await Post.find({ _id: req.params.postId })
+      .populate("author")
+      .exec((err, post) => res.json(post));
   } catch (err) {
     res.send(`Error occured at post GET routes: ${err}`);
   }

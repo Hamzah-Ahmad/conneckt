@@ -2,3 +2,16 @@
 .App {
   font-family: "Montserrat", sans-serif;
 }
+
+#panel1a-header {
+  /* background-color: aquamarine; */
+  min-height: 30px !important;
+  height: 30px !important;
+  /* margin-left: 0px; */
+  padding-left: 5px;
+  border-top: none;
+}
+
+.MuiExpansionPanelSummary-content {
+  border-top: none !important;
+}
