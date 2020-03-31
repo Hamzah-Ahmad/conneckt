@@ -18,4 +18,22 @@ router.get("/", auth, async (req, res) => {
   //   res.send("Reached");
 });
 
+//@route DELETE api/notifications/notifId
+//@desc Deleting Notification
+//@access Private
+router.delete("/:notifId", auth, async (req, res) => {
+  const notifId = req.params.notifId;
+  console.log('reached delete')
+  User.findById(req.user._id).then(async user => {
+    if (!user) {
+      res.status(401).json({ msg: "User not found" });
+    } else {
+      user.notifications = user.notifications.filter(notif => notif._id.toString() != notifId);;
+      await user.save();
+      console.log(user.notifications)
+      // res.json(user.notifications);
+    }
+  });  
+});
+
 module.exports = router;

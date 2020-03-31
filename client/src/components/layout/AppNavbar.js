@@ -1,8 +1,7 @@
 import React from "react";
 import { logout } from "../../actions/authActions";
-import { getNotifications } from "../../actions/notificationsActions";
+import { getNotifications, deleteNotification } from "../../actions/notificationsActions";
 import { connect } from "react-redux";
-import Pusher from "pusher-js";
 import { Link } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -36,16 +35,9 @@ const AppNavbar = props => {
   const [newNotif, setNewNotif] = React.useState(false);
   React.useEffect(() => {
     props.getNotifications();
-    var pusher = new Pusher("fc9be82df2acb3b15348", {
-      cluster: "us2",
-      forceTLS: true
-    });
+ 
 
-    var channel = pusher.subscribe(`${props.auth.user._id}`);
-    channel.bind("liked_post", function(data) {
-      setNewNotif(true);
-      props.getNotifications();
-    });
+    console.log(`Post author id: ${props.auth.user._id} & type is ${typeof props.auth.user._id}`)
     // eslint-disable-next-line
   }, []);
 
@@ -88,23 +80,24 @@ const AppNavbar = props => {
             onClose={handleClose}
           >
             {props.notifications.notifications.map(notif => (
-              <MenuItem
+              <Link
+              to={{
+                pathname: `/post/${notif.post}`
+                // state: { post: notif.post }
+              }}
+            >
+             <MenuItem
                 onClick={() => {
-                  console.log(notif);
+                  // console.log(notif);
+                  props.deleteNotification(notif._id);
                   handleClose();
                 }}
                 key={notif._id}
               >
                 {notif.text}
-                <Link
-                  to={{
-                    pathname: `/post/${notif.post}`
-                    // state: { post: notif.post }
-                  }}
-                >
-                  See More
-                </Link>
+               
               </MenuItem>
+                </Link>
             ))}
           </Menu>
 
@@ -130,6 +123,6 @@ const mapStateToProps = state => ({
   notifications: state.notifications
 });
 
-export default connect(mapStateToProps, { logout, getNotifications })(
+export default connect(mapStateToProps, { logout, getNotifications, deleteNotification })(
   AppNavbar
 );

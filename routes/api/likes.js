@@ -1,14 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Pusher = require("pusher");
 
-const pusher = new Pusher({
-  appId: "952546",
-  key: "fc9be82df2acb3b15348",
-  secret: "6bb5c5f63b98ef71a3d0",
-  cluster: "us2",
-  encrypted: true
-});
 
 const auth = require("../../middleware/auth");
 const Post = require("../../models/Posts");
@@ -37,9 +29,7 @@ router.post("/:postId", auth, async (req, res) => {
       // console.log(postAuthor);
       postAuthor.notifications.push(notif);
       await postAuthor.save();
-      pusher.trigger(`${postAuthor._id}`, "liked_post", {
-        notif: notif
-      });
+     
     }
     post.save().then(post => {
       res.json(post.likes);

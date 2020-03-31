@@ -1,3 +1,4 @@
+require("dotenv").config();
 const crypto = require("crypto");
 
 const router = require("express").Router();
