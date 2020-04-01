@@ -92,7 +92,7 @@ const AppNavbar = props => {
             >
              <MenuItem
                 onClick={() => {
-                  props.deleteNotification(notif._id);
+                  // props.deleteNotification(notif._id);
                   handleClose();
                 }}
               >

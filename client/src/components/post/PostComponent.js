@@ -83,7 +83,7 @@ const PostComponent = props => {
 
   //Comments Modal
   const [commentDialogOpen, setCommentOpen] = useState(false);
-
+  React.useEffect(() => console.log(props))
   return (
     <div className={classes.post}>
       {/* Simple Menu Component */}

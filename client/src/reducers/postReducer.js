@@ -2,7 +2,6 @@ import { GET_POSTS } from "../actions/types";
 
 const initialState = {
   posts: [],
-  post: {}
 };
 
 export default function(state = initialState, action) {

@@ -31,7 +31,6 @@ export const loadUser = () => (dispatch, getState) => {
       // console.log("Load User Error");
       // console.log(err.response.data);
       // console.log(err.response.status);
-      dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: AUTH_ERROR
       });
