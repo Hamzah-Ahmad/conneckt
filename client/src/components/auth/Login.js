@@ -42,7 +42,7 @@ const Login = props => {
   useEffect(() => {
     if (error) {
       if (error.id === "LOGIN_FAIL") {
-        console.log("Error is " + error);
+        // console.log("Error is " + error);
         setMsg(error.msg.msg);
       } else {
         setMsg(null);

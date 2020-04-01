@@ -28,6 +28,9 @@ export const loadUser = () => (dispatch, getState) => {
     })
     .catch(err => {
       console.log(err);
+      // console.log("Load User Error");
+      // console.log(err.response.data);
+      // console.log(err.response.status);
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: AUTH_ERROR
@@ -56,6 +59,7 @@ export const register = ({ name, email, password }) => dispatch => {
       })
     )
     .catch(err => {
+      console.log(err);
       dispatch(
         returnErrors(err.response.data, err.response.status, "REGISTER_FAIL")
       );
@@ -86,6 +90,7 @@ export const login = ({ email, password }) => dispatch => {
       })
     )
     .catch(err => {
+      console.log(err);
       dispatch(
         returnErrors(err.response.data, err.response.status, "LOGIN_FAIL")
       );

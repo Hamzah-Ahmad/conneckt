@@ -1,6 +1,6 @@
 import { LIKE_POST } from "../actions/types";
 import { tokenConfig } from "./authActions";
-import { returnErrors } from "./errorActions";
+// import { returnErrors } from "./errorActions";
 import axios from "axios";
 
 export const likePost = postId => (dispatch, getState) => {
@@ -14,6 +14,6 @@ export const likePost = postId => (dispatch, getState) => {
     })
     .catch(err => {
       console.log(err);
-      dispatch(returnErrors(err.response.data, err.response.status));
+      // dispatch(returnErrors(err.response.data, err.response.status));
     });
 };

@@ -20,6 +20,10 @@ const useStyles = makeStyles(theme => ({
   button: {
     justifyContent: "flex-start"
   },
+  link: {
+    textDecoration: "none",
+    color: "black"
+  },
   root: {
     flexGrow: 1
   },
@@ -35,9 +39,7 @@ const AppNavbar = props => {
   const [newNotif, setNewNotif] = React.useState(false);
   React.useEffect(() => {
     props.getNotifications();
- 
-
-    console.log(`Post author id: ${props.auth.user._id} & type is ${typeof props.auth.user._id}`)
+    // console.log(`Post author id: ${props.auth.user._id} & type is ${typeof props.auth.user._id}`)
     // eslint-disable-next-line
   }, []);
 
@@ -82,17 +84,17 @@ const AppNavbar = props => {
             {props.notifications.notifications.map(notif => (
               <Link
               to={{
-                pathname: `/post/${notif.post}`
+                pathname: `/post/${notif.post}`,
                 // state: { post: notif.post }
               }}
+              key={notif._id}
+              className={classes.link}
             >
              <MenuItem
                 onClick={() => {
-                  // console.log(notif);
                   props.deleteNotification(notif._id);
                   handleClose();
                 }}
-                key={notif._id}
               >
                 {notif.text}
                

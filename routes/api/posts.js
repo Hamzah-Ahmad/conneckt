@@ -36,9 +36,9 @@ router.get("/", async (req, res) => {
 //@access Public
 router.get("/:postId", async (req, res) => {
   try {
-    await Post.find({ _id: req.params.postId })
+    await Post.findOne({ _id: req.params.postId })
       .populate("author")
-      .exec((err, post) => res.json(post));
+      .exec((err, post) =>{console.log(post); res.json(post)});
   } catch (err) {
     res.send(`Error occured at post GET routes: ${err}`);
   }

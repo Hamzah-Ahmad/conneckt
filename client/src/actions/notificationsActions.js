@@ -1,6 +1,6 @@
 import { GET__NOTIFICATIONS, DELETE_NOTIFICATION } from "../actions/types";
 import { tokenConfig } from "./authActions";
-import { returnErrors } from "./errorActions";
+// import { returnErrors } from "./errorActions";
 import axios from "axios";
 
 export const getNotifications = () => (dispatch, getState) => {
@@ -15,7 +15,7 @@ export const getNotifications = () => (dispatch, getState) => {
     })
     .catch(err => {
       console.log(err);
-      dispatch(returnErrors(err.response.data, err.response.status));
+      // dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
 
@@ -31,6 +31,6 @@ export const deleteNotification = (notifId) => (dispatch, getState) => {
   })
   .catch(err => {
     console.log(err);
-    dispatch(returnErrors(err.response.data, err.response.status));
+    // dispatch(returnErrors(err.response.data, err.response.status));
   });
 }

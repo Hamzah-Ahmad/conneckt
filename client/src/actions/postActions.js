@@ -1,6 +1,6 @@
-import { GET_POSTS, MAKE_POST, DELETE_POST, EDIT_POST } from "./types";
+import { GET_POSTS, GET_POST, MAKE_POST, DELETE_POST, EDIT_POST } from "./types";
 import { tokenConfig } from "./authActions";
-import { returnErrors } from "./errorActions";
+// import { returnErrors } from "./errorActions";
 
 import axios from "axios";
 export const getPosts = () => dispatch => {
@@ -8,6 +8,14 @@ export const getPosts = () => dispatch => {
     dispatch({
       type: GET_POSTS,
       payload: posts.data
+    });
+  });
+};
+export const getPost = (postId) => dispatch => {
+  axios.get(`/api/posts/${postId}`).then(post => {
+    dispatch({
+      type: GET_POST,
+      payload: post.data
     });
   });
 };
@@ -24,7 +32,7 @@ export const makePost = content => (dispatch, getState) => {
     })
     .catch(err => {
       console.log(err);
-      dispatch(returnErrors(err.response.data, err.response.status));
+      // dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
 export const deletePost = postId => (dispatch, getState) => {
@@ -39,7 +47,7 @@ export const deletePost = postId => (dispatch, getState) => {
     })
     .catch(err => {
       console.log(err);
-      dispatch(returnErrors(err.response.data, err.response.status));
+      //dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
 export const editPost = (postId, content) => (dispatch, getState) => {
@@ -55,6 +63,6 @@ export const editPost = (postId, content) => (dispatch, getState) => {
     })
     .catch(err => {
       console.log(err);
-      dispatch(returnErrors(err.response.data, err.response.status));
+      // dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
