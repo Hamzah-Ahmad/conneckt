@@ -8,10 +8,17 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case MAKE_POST:
-    case EDIT_POST:
     case GET_POST:
       return {
         post: action.payload
+      };
+
+    case EDIT_POST:
+      return {
+        post: {
+          ...state.post,
+          content: action.payload.content
+        }
       };
     case DELETE_POST:
       return {

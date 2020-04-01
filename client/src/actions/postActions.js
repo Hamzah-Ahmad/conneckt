@@ -63,10 +63,7 @@ export const deletePost = (postId, history, redirectBool) => (
       //dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
-export const editPost = (postId, content, history, redirectBool) => (
-  dispatch,
-  getState
-) => {
+export const editPost = (postId, content) => (dispatch, getState) => {
   console.log("Edited Post");
   const body = JSON.stringify({ content });
   axios
@@ -76,10 +73,6 @@ export const editPost = (postId, content, history, redirectBool) => (
         type: EDIT_POST,
         payload: res.data
       });
-
-      if (redirectBool == true) {
-        history.push("/");
-      }
     })
     .catch(err => {
       console.log(err);

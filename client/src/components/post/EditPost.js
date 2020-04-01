@@ -39,7 +39,7 @@ const EditPost = ({
         <DialogActions>
           <Button
             onClick={() => {
-              editPost(postId, postContent, props.history, redirectBool);
+              editPost(postId, postContent);
               setDialogOpen(false);
               //Edit post is used in both HomePage component and PostPage component. Redirection was required in the PostPage component, therefore I introduced this variable here. This variable should be only in these three files.
               // if (redirectBool == true) {

@@ -118,7 +118,6 @@ const PostComponent = props => {
         postId={props.post._id}
         content={props.post.content}
         editPost={props.editPost}
-        redirectBool={false}
       />
 
       <div className={classes.postInfo}>

@@ -122,7 +122,6 @@ const PostPage = props => {
               postId={props.post._id}
               content={props.post.content}
               editPost={props.editPost}
-              redirectBool={true}
             />
 
             <div className={classes.postInfo}>
