@@ -1,13 +1,14 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import EditPost from "../post/EditPost";
-import {connect} from "react-redux";
-import {getPost} from '../../actions/postActions'
+import { connect } from "react-redux";
+import { getPost } from "../../actions/postActions";
 import { likePost } from "../../actions/likeActions";
 import { deletePost, editPost } from "../../actions/postActions";
 import { postComment, deleteComment } from "../../actions/commentActions";
 import CommentBoxComponent from "../post/CommentBoxComponent";
-import PostComponent from '../post/PostComponent';
-
+import CommentComponent from "../post/CommentComponent";
+import AppNavBar from "./AppNavbar";
+import PostComponent from "../post/PostComponent";
 
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
@@ -51,7 +52,7 @@ const useStyles = makeStyles(theme => ({
   post: {
     border: "1px solid grey",
     padding: theme.spacing(2),
-    marginTop: theme.spacing(4)
+    margin: theme.spacing(2)
   },
   postInfo: {
     display: "flex",
@@ -64,8 +65,9 @@ const useStyles = makeStyles(theme => ({
 
 const PostPage = props => {
   useEffect(() => {
+    console.log("getPost ran " + props.match.params.postId);
     props.getPost(props.match.params.postId);
-  }, [])
+  }, []);
   const classes = useStyles();
 
   //Simple Menu
@@ -83,17 +85,110 @@ const PostPage = props => {
   //Comments Modal
   const [commentDialogOpen, setCommentOpen] = useState(false);
   return (
-    <div className={classes.post}>
-      <button onClick={() => console.log(props)}>Check Props</button> 
-      {Object.keys(props.post).length > 0 ?
-      <PostComponent post={props.post} /> : <div>Loading</div>}
-      
-  </div>
-  )
+    <div>
+      <AppNavBar />
+      {/* <button onClick={() => console.log(props)}>Check Props</button>  */}
+
+      {props.post ? (
+        Object.keys(props.post).length > 0 ? (
+          <div className={classes.post}>
+            {/* Simple Menu Component */}
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem
+                onClick={() => {
+                  setDialogOpen(true);
+                  handleClose();
+                }}
+              >
+                Edit
+              </MenuItem>
+              <MenuItem
+                onClick={async () => {
+                  await props.deletePost(props.post._id);
+                  props.history.push("/");
+
+                  handleClose();
+                }}
+              >
+                Delete
+              </MenuItem>
+            </Menu>
+            {/* Edit Post Component */}
+            <EditPost
+              dialogOpen={dialogOpen}
+              setDialogOpen={setDialogOpen}
+              postId={props.post._id}
+              content={props.post.content}
+              editPost={props.editPost}
+            />
+
+            <div className={classes.postInfo}>
+              <div className={classes.title}>{props.post.author.name}</div>
+              <div>
+                {props.post.author._id === props.auth.user._id ? (
+                  <IconButton onClick={handleClick} size="small">
+                    <MoreHorizIcon />
+                  </IconButton>
+                ) : null}
+              </div>
+            </div>
+            <div className={classes.content}>{props.post.content}</div>
+            <IconButton
+              onClick={() => {
+                props.likePost(props.post._id);
+              }}
+            >
+              {props.post.likes.includes(props.auth.user._id) ? (
+                <EmojiEmotionsIcon color="primary" />
+              ) : (
+                <InsertEmoticonIcon />
+              )}
+            </IconButton>
+            <small>{props.post.likes.length}</small>
+            <IconButton
+              onClick={() => {
+                setCommentOpen(true);
+              }}
+            >
+              <ChatOutlinedIcon />
+            </IconButton>
+            <small>{props.post.comments.length}</small>
+            <hr />
+            {props.post.comments.map(comment => (
+              <CommentComponent
+                comment={comment}
+                post={props.post}
+                auth={props.auth}
+                key={comment._id}
+                deleteComment={props.deleteComment}
+              />
+            ))}
+          </div>
+        ) : (
+          <div>Loading</div>
+        )
+      ) : (
+        <div>Post Not Found</div>
+      )}
+    </div>
+  );
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
   post: state.singlePost.post
 });
-export default connect(mapStateToProps, {getPost})(PostPage);
+export default connect(mapStateToProps, {
+  getPost,
+  postComment,
+  deleteComment,
+  likePost,
+  deletePost,
+  editPost
+})(PostPage);

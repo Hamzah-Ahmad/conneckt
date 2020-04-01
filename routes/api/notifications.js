@@ -23,17 +23,19 @@ router.get("/", auth, async (req, res) => {
 //@access Private
 router.delete("/:notifId", auth, async (req, res) => {
   const notifId = req.params.notifId;
-  console.log('reached delete')
+  console.log("reached delete");
   User.findById(req.user._id).then(async user => {
     if (!user) {
       res.status(401).json({ msg: "User not found" });
     } else {
-      user.notifications = user.notifications.filter(notif => notif._id.toString() != notifId);;
+      user.notifications = user.notifications.filter(
+        notif => notif._id.toString() != notifId
+      );
       await user.save();
-      console.log(user.notifications)
-      // res.json(user.notifications);
+      // console.log(user.notifications)
+      res.json(user.notifications);
     }
-  });  
+  });
 });
 
 module.exports = router;

@@ -1,6 +1,9 @@
 import React from "react";
 import { logout } from "../../actions/authActions";
-import { getNotifications, deleteNotification } from "../../actions/notificationsActions";
+import {
+  getNotifications,
+  deleteNotification
+} from "../../actions/notificationsActions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -82,24 +85,32 @@ const AppNavbar = props => {
             onClose={handleClose}
           >
             {props.notifications.notifications.map(notif => (
-              <Link
-              to={{
-                pathname: `/post/${notif.post}`,
-                // state: { post: notif.post }
-              }}
-              key={notif._id}
-              className={classes.link}
-            >
-             <MenuItem
+              <MenuItem
                 onClick={() => {
                   // props.deleteNotification(notif._id);
-                  handleClose();
+                  // handleClose();
                 }}
               >
-                {notif.text}
-               
-              </MenuItem>
+                <Link
+                  to={{
+                    pathname: `/post/${notif.post}`
+                    // state: { post: notif.post }
+                  }}
+                  key={notif._id}
+                  className={classes.link}
+                >
+                  {notif.text}
                 </Link>
+
+                <button
+                  style={{ margintLeftt: "40px" }}
+                  onClick={e => {
+                    props.deleteNotification(notif._id);
+                  }}
+                >
+                  x
+                </button>
+              </MenuItem>
             ))}
           </Menu>
 
@@ -125,6 +136,8 @@ const mapStateToProps = state => ({
   notifications: state.notifications
 });
 
-export default connect(mapStateToProps, { logout, getNotifications, deleteNotification })(
-  AppNavbar
-);
+export default connect(mapStateToProps, {
+  logout,
+  getNotifications,
+  deleteNotification
+})(AppNavbar);
