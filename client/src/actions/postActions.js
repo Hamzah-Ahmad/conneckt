@@ -1,4 +1,10 @@
-import { GET_POSTS, GET_POST, MAKE_POST, DELETE_POST, EDIT_POST } from "./types";
+import {
+  GET_POSTS,
+  GET_POST,
+  MAKE_POST,
+  DELETE_POST,
+  EDIT_POST
+} from "./types";
 import { tokenConfig } from "./authActions";
 // import { returnErrors } from "./errorActions";
 
@@ -11,7 +17,7 @@ export const getPosts = () => dispatch => {
     });
   });
 };
-export const getPost = (postId) => dispatch => {
+export const getPost = postId => dispatch => {
   axios.get(`/api/posts/${postId}`).then(post => {
     dispatch({
       type: GET_POST,
@@ -35,7 +41,10 @@ export const makePost = content => (dispatch, getState) => {
       // dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
-export const deletePost = postId => (dispatch, getState) => {
+export const deletePost = (postId, history, redirectBool) => (
+  dispatch,
+  getState
+) => {
   console.log(postId);
 
   axios
@@ -44,13 +53,20 @@ export const deletePost = postId => (dispatch, getState) => {
       dispatch({
         type: DELETE_POST
       });
+
+      if (redirectBool == true) {
+        history.push("/");
+      }
     })
     .catch(err => {
       console.log(err);
       //dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
-export const editPost = (postId, content) => (dispatch, getState) => {
+export const editPost = (postId, content, history, redirectBool) => (
+  dispatch,
+  getState
+) => {
   console.log("Edited Post");
   const body = JSON.stringify({ content });
   axios
@@ -60,6 +76,10 @@ export const editPost = (postId, content) => (dispatch, getState) => {
         type: EDIT_POST,
         payload: res.data
       });
+
+      if (redirectBool == true) {
+        history.push("/");
+      }
     })
     .catch(err => {
       console.log(err);

@@ -107,9 +107,7 @@ const PostPage = props => {
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  props.deletePost(props.post._id);
-
-                  props.history.push("/");
+                  props.deletePost(props.post._id, props.history, true);
 
                   handleClose();
                 }}

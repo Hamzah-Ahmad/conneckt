@@ -104,7 +104,7 @@ const PostComponent = props => {
         </MenuItem>
         <MenuItem
           onClick={() => {
-            props.deletePost(props.post._id);
+            props.deletePost(props.post._id, null, false);
             handleClose();
           }}
         >
