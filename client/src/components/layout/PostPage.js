@@ -5,10 +5,8 @@ import { getPost } from "../../actions/postActions";
 import { likePost } from "../../actions/likeActions";
 import { deletePost, editPost } from "../../actions/postActions";
 import { postComment, deleteComment } from "../../actions/commentActions";
-import CommentBoxComponent from "../post/CommentBoxComponent";
 import CommentComponent from "../post/CommentComponent";
 import AppNavBar from "./AppNavbar";
-import PostComponent from "../post/PostComponent";
 
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
@@ -88,7 +86,6 @@ const PostPage = props => {
     <div>
       <AppNavBar />
       {/* <button onClick={() => console.log(props)}>Check Props</button>  */}
-
       {props.post ? (
         Object.keys(props.post).length > 0 ? (
           <div className={classes.post}>
@@ -109,8 +106,9 @@ const PostPage = props => {
                 Edit
               </MenuItem>
               <MenuItem
-                onClick={async () => {
-                  await props.deletePost(props.post._id);
+                onClick={() => {
+                  props.deletePost(props.post._id);
+
                   props.history.push("/");
 
                   handleClose();
@@ -126,6 +124,7 @@ const PostPage = props => {
               postId={props.post._id}
               content={props.post.content}
               editPost={props.editPost}
+              redirectBool={true}
             />
 
             <div className={classes.postInfo}>

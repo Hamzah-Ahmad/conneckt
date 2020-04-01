@@ -11,7 +11,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-// import Icon from "@material-ui/core/Icon";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import IconButton from "@material-ui/core/IconButton";
 import NotificationsNoneIcon from "@material-ui/icons/NotificationsNone";
@@ -90,13 +89,13 @@ const AppNavbar = props => {
                   // props.deleteNotification(notif._id);
                   // handleClose();
                 }}
+                key={notif._id}
               >
                 <Link
                   to={{
                     pathname: `/post/${notif.post}`
                     // state: { post: notif.post }
                   }}
-                  key={notif._id}
                   className={classes.link}
                 >
                   {notif.text}
