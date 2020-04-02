@@ -23,7 +23,7 @@ router.get("/", auth, async (req, res) => {
 //@access Private
 router.delete("/:notifId", auth, async (req, res) => {
   const notifId = req.params.notifId;
-  console.log("reached delete");
+  // console.log("reached delete");
   User.findById(req.user._id).then(async user => {
     if (!user) {
       res.status(401).json({ msg: "User not found" });

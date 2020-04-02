@@ -16,6 +16,7 @@ import axios from "axios";
 //We want to call loadUser all the time to get constantly get user info as jwt is stateless so user info is not saved in server state
 export const loadUser = () => (dispatch, getState) => {
   //User Loading --> sets isLoading to true
+  console.log("Load User Ran");
   dispatch({ type: USER_LOADING });
   axios
     .get("/api/auth/user", tokenConfig(getState))

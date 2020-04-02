@@ -6,6 +6,7 @@ import commentReducer from "./commentReducer";
 import likeReducer from "./likeReducer";
 import notificationReducer from "./notificationReducer";
 import singlePostReducer from "./singlePostReducer";
+import followReducer from "./followReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   singlePost: singlePostReducer,
   comments: commentReducer,
   likes: likeReducer,
-  notifications: notificationReducer
+  notifications: notificationReducer,
+  followReducer: followReducer
 });

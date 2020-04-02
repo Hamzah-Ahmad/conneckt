@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { getPosts } from "../../actions/postActions";
 import { getNotifications } from "../../actions/notificationsActions";
+import { loadUser } from "../../actions/authActions";
 import AppNavbar from "./AppNavbar";
 import PostComponent from "../post/PostComponent";
 import PostTextBox from "./PostTextBox";
@@ -10,17 +11,10 @@ import Container from "@material-ui/core/Container";
 
 const HomePage = props => {
   React.useEffect(() => {
-    // console.log(props);
-    // console.log(props.notifications);
     props.getPosts();
-
     // eslint-disable-next-line
   }, [props.comments, props.likes, props.singlePost]);
 
-  // React.useEffect(() => {
-  //   console.log("get notifications");
-  //   props.getNotifications();
-  // });
   const posts = props.posts.posts;
   const { isAuthenticated } = props.auth;
   return (
@@ -52,9 +46,12 @@ const mapStateToProps = state => ({
   comments: state.comments,
   likes: state.likes,
   singlePost: state.singlePost,
-  notifications: state.notifications
+  notifications: state.notifications,
+  followReducer: state.followReducer
 });
 
-export default connect(mapStateToProps, { getPosts, getNotifications })(
-  HomePage
-);
+export default connect(mapStateToProps, {
+  getPosts,
+  getNotifications,
+  loadUser
+})(HomePage);

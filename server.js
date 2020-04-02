@@ -21,6 +21,7 @@ mongoose
 app.use("/api/users", require("./routes/api/auth/users"));
 app.use("/api/auth", require("./routes/api/auth/auth"));
 app.use("/api/posts", require("./routes/api/posts"));
+app.use("/api/follow", require("./routes/api/follow"));
 app.use("/api/comments", require("./routes/api/comments"));
 app.use("/api/post/like", require("./routes/api/likes"));
 app.use("/api/notifications", require("./routes/api/notifications"));

@@ -26,7 +26,7 @@ export const getPost = postId => dispatch => {
   });
 };
 export const makePost = content => (dispatch, getState) => {
-  console.log("Made Post");
+  // console.log("Made Post");
   const body = JSON.stringify({ content });
   axios
     .post("/api/posts", body, tokenConfig(getState))
@@ -54,7 +54,7 @@ export const deletePost = (postId, history, redirectBool) => (
         type: DELETE_POST
       });
 
-      if (redirectBool == true) {
+      if (redirectBool === true) {
         history.push("/");
       }
     })
@@ -64,7 +64,7 @@ export const deletePost = (postId, history, redirectBool) => (
     });
 };
 export const editPost = (postId, content) => (dispatch, getState) => {
-  console.log("Edited Post");
+  // console.log("Edited Post");
   const body = JSON.stringify({ content });
   axios
     .patch(`/api/posts/${postId}`, body, tokenConfig(getState))

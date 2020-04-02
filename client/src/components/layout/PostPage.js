@@ -5,7 +5,7 @@ import { getPost } from "../../actions/postActions";
 import { likePost } from "../../actions/likeActions";
 import { deletePost, editPost } from "../../actions/postActions";
 import { postComment, deleteComment } from "../../actions/commentActions";
-import CommentComponent from "../post/CommentComponent";
+import CommentBoxComponent from "../post/CommentBoxComponent";
 import AppNavBar from "./AppNavbar";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -63,8 +63,9 @@ const useStyles = makeStyles(theme => ({
 
 const PostPage = props => {
   useEffect(() => {
-    console.log("getPost ran " + props.match.params.postId);
+    // console.log("getPost ran " + props.match.params.postId);
     props.getPost(props.match.params.postId);
+    //eslint-disable-next-line
   }, []);
   const classes = useStyles();
 
@@ -123,9 +124,12 @@ const PostPage = props => {
               content={props.post.content}
               editPost={props.editPost}
             />
-
             <div className={classes.postInfo}>
-              <div className={classes.title}>{props.post.author.name}</div>
+              <div className={classes.title}>
+                {props.post.author.name}
+                <small> Followers : {props.post.author.followers.length}</small>
+                <small> Following : {props.post.author.following.length}</small>
+              </div>
               <div>
                 {props.post.author._id === props.auth.user._id ? (
                   <IconButton onClick={handleClick} size="small">
@@ -155,15 +159,11 @@ const PostPage = props => {
               <ChatOutlinedIcon />
             </IconButton>
             <small>{props.post.comments.length}</small>
-            <hr />
-            {props.post.comments.map(comment => (
-              <CommentComponent
-                comment={comment}
-                post={props.post}
-                auth={props.auth}
-                key={comment._id}
-                deleteComment={props.deleteComment}
-              />
+            <CommentBoxComponent
+              {...props}
+              commentDialogOpen={commentDialogOpen}
+              setCommentOpen={setCommentOpen}
+            />
             ))}
           </div>
         ) : (
@@ -178,7 +178,10 @@ const PostPage = props => {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  post: state.singlePost.post
+  post: state.singlePost.post,
+  comments: state.comments,
+  likes: state.likes,
+  followReducer: state.followReducer
 });
 export default connect(mapStateToProps, {
   getPost,

@@ -39,7 +39,7 @@ router.get("/:postId", async (req, res) => {
     await Post.findOne({ _id: req.params.postId })
       .populate("author")
       .exec((err, post) => {
-        console.log(post);
+        // console.log(post);
         res.json(post);
       });
   } catch (err) {

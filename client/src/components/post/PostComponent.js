@@ -3,6 +3,7 @@ import EditPost from "./EditPost";
 import { postComment, deleteComment } from "../../actions/commentActions";
 import { likePost } from "../../actions/likeActions";
 import { deletePost, editPost } from "../../actions/postActions";
+import { followUser } from "../../actions/followActions";
 import { connect } from "react-redux";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -83,7 +84,7 @@ const PostComponent = props => {
 
   //Comments Modal
   const [commentDialogOpen, setCommentOpen] = useState(false);
-  React.useEffect(() => console.log(props));
+  // React.useEffect(() => console.log(props));
   return (
     <div className={classes.post}>
       {/* Simple Menu Component */}
@@ -121,12 +122,22 @@ const PostComponent = props => {
       />
 
       <div className={classes.postInfo}>
-        <div className={classes.title}>{props.post.author.name}</div>
+        <div
+          className={classes.title}
+          onClick={() => {
+            props.followUser(props.post.author._id);
+          }}
+        >
+          {props.post.author.name}
+        </div>
         <div>
           {props.post.author._id === props.auth.user._id ? (
-            <IconButton onClick={handleClick} size="small">
-              <MoreHorizIcon />
-            </IconButton>
+            <div>
+              <small> Following : {props.followReducer.following.length}</small>
+              <IconButton onClick={handleClick} size="small">
+                <MoreHorizIcon />
+              </IconButton>
+            </div>
           ) : null}
         </div>
       </div>
@@ -162,7 +173,8 @@ const PostComponent = props => {
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  followReducer: state.followReducer
 });
 
 export default connect(mapStateToProps, {
@@ -170,5 +182,6 @@ export default connect(mapStateToProps, {
   deleteComment,
   likePost,
   deletePost,
-  editPost
+  editPost,
+  followUser
 })(PostComponent);

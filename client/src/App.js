@@ -15,7 +15,7 @@ import PostPage from "./components/layout/PostPage";
 function App() {
   useEffect(() => {
     store.dispatch(loadUser());
-    // console.log("use effect called from app.js");
+    console.log("use effect called from app.js");
   });
   return (
     <div>

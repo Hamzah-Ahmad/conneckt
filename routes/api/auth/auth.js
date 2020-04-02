@@ -39,7 +39,8 @@ router.post("/", (req, res) => {
               _id: user.id,
               name: user.name,
               email: user.email,
-              connections: user.connections,
+              followers: user.followers,
+              following: user.following,
               notifications: user.notifications
             }
           });
