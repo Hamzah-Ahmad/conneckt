@@ -9,14 +9,15 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
+const server = require("http").Server(app);
 
 mongoose
   .connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
-    useCreateIndex: true
+    useCreateIndex: true,
   })
   .then(() => console.log("Connected to MongoDB"))
-  .catch(err => console.log("Error in connecting to DB: " + err));
+  .catch((err) => console.log("Error in connecting to DB: " + err));
 
 app.use("/api/users", require("./routes/api/auth/users"));
 app.use("/api/auth", require("./routes/api/auth/auth"));

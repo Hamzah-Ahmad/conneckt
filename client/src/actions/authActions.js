@@ -7,7 +7,9 @@ import {
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
-  REGISTER_FAIL
+  REGISTER_FAIL,
+  LOAD_FOLLOWERS,
+  LOAD_FOLLOWING,
 } from "./types";
 import axios from "axios";
 
@@ -16,35 +18,42 @@ import axios from "axios";
 //We want to call loadUser all the time to get constantly get user info as jwt is stateless so user info is not saved in server state
 export const loadUser = () => (dispatch, getState) => {
   //User Loading --> sets isLoading to true
-  console.log("Load User Ran");
   dispatch({ type: USER_LOADING });
   axios
     .get("/api/auth/user", tokenConfig(getState))
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: USER_LOADED,
-        payload: res.data
+        payload: res.data,
       });
-      // console.log(res.data);
+      dispatch({
+        type: LOAD_FOLLOWERS,
+        payload: res.data.followers,
+      });
+      dispatch({
+        type: LOAD_FOLLOWING,
+        payload: res.data.following,
+      });
+      console.log(res.data);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       // console.log("Load User Error");
       // console.log(err.response.data);
       // console.log(err.response.status);
       dispatch({
-        type: AUTH_ERROR
+        type: AUTH_ERROR,
       });
     });
 };
 
 // Register User
-export const register = ({ name, email, password }) => dispatch => {
+export const register = ({ name, email, password }) => (dispatch) => {
   // Headers
   const config = {
     headers: {
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   };
 
   // Request body
@@ -52,30 +61,30 @@ export const register = ({ name, email, password }) => dispatch => {
 
   axios
     .post("/api/users", body, config)
-    .then(res =>
+    .then((res) =>
       dispatch({
         type: REGISTER_SUCCESS,
-        payload: res.data
+        payload: res.data,
       })
     )
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       dispatch(
         returnErrors(err.response.data, err.response.status, "REGISTER_FAIL")
       );
       dispatch({
-        type: REGISTER_FAIL
+        type: REGISTER_FAIL,
       });
     });
 };
 
 //Login User
-export const login = ({ email, password }) => dispatch => {
+export const login = ({ email, password }) => (dispatch) => {
   // Headers
   const config = {
     headers: {
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   };
 
   // Request body
@@ -83,19 +92,19 @@ export const login = ({ email, password }) => dispatch => {
 
   axios
     .post("/api/auth", body, config)
-    .then(res =>
+    .then((res) =>
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: res.data
+        payload: res.data,
       })
     )
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       dispatch(
         returnErrors(err.response.data, err.response.status, "LOGIN_FAIL")
       );
       dispatch({
-        type: LOGIN_FAIL
+        type: LOGIN_FAIL,
       });
     });
 };
@@ -103,12 +112,12 @@ export const login = ({ email, password }) => dispatch => {
 //Logout user
 export const logout = () => {
   return {
-    type: LOGOUT_SUCCESS
+    type: LOGOUT_SUCCESS,
   };
 };
 
 //Setup config/headers and token
-export const tokenConfig = getState => {
+export const tokenConfig = (getState) => {
   //this getState is provided as an arg to tokenConfig wherever the funciton is called
   //Get token from local storage
   const token = getState().auth.token; //gets token from state in authReducer
@@ -116,8 +125,8 @@ export const tokenConfig = getState => {
   //Headers
   const config = {
     headers: {
-      "Content-type": "application/json"
-    }
+      "Content-type": "application/json",
+    },
   };
 
   //if token, add to headers

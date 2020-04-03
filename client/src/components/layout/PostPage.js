@@ -66,7 +66,7 @@ const PostPage = props => {
     // console.log("getPost ran " + props.match.params.postId);
     props.getPost(props.match.params.postId);
     //eslint-disable-next-line
-  }, []);
+  }, [props.comments, props.likes, props.singlePost]);
   const classes = useStyles();
 
   //Simple Menu
@@ -83,12 +83,13 @@ const PostPage = props => {
 
   //Comments Modal
   const [commentDialogOpen, setCommentOpen] = useState(false);
+  const post = props.post;
   return (
     <div>
       <AppNavBar />
       {/* <button onClick={() => console.log(props)}>Check Props</button>  */}
-      {props.post ? (
-        Object.keys(props.post).length > 0 ? (
+      {post ? (
+        Object.keys(post).length > 0 ? (
           <div className={classes.post}>
             {/* Simple Menu Component */}
             <Menu
@@ -108,7 +109,7 @@ const PostPage = props => {
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  props.deletePost(props.post._id, props.history, true);
+                  props.deletePost(post._id, props.history, true);
 
                   handleClose();
                 }}
@@ -120,37 +121,36 @@ const PostPage = props => {
             <EditPost
               dialogOpen={dialogOpen}
               setDialogOpen={setDialogOpen}
-              postId={props.post._id}
-              content={props.post.content}
+              postId={post._id}
+              content={post.content}
               editPost={props.editPost}
             />
             <div className={classes.postInfo}>
               <div className={classes.title}>
-                {props.post.author.name}
-                <small> Followers : {props.post.author.followers.length}</small>
-                <small> Following : {props.post.author.following.length}</small>
+                {post.author.name}
+                <small> Followers : {post.author.followers.length}</small>
               </div>
               <div>
-                {props.post.author._id === props.auth.user._id ? (
+                {post.author._id === props.auth.user._id ? (
                   <IconButton onClick={handleClick} size="small">
                     <MoreHorizIcon />
                   </IconButton>
                 ) : null}
               </div>
             </div>
-            <div className={classes.content}>{props.post.content}</div>
+            <div className={classes.content}>{post.content}</div>
             <IconButton
               onClick={() => {
-                props.likePost(props.post._id);
+                props.likePost(post._id);
               }}
             >
-              {props.post.likes.includes(props.auth.user._id) ? (
+              {post.likes.includes(props.auth.user._id) ? (
                 <EmojiEmotionsIcon color="primary" />
               ) : (
                 <InsertEmoticonIcon />
               )}
             </IconButton>
-            <small>{props.post.likes.length}</small>
+            <small>{post.likes.length}</small>
             <IconButton
               onClick={() => {
                 setCommentOpen(true);
@@ -158,13 +158,12 @@ const PostPage = props => {
             >
               <ChatOutlinedIcon />
             </IconButton>
-            <small>{props.post.comments.length}</small>
+            <small>{post.comments.length}</small>
             <CommentBoxComponent
               {...props}
               commentDialogOpen={commentDialogOpen}
               setCommentOpen={setCommentOpen}
             />
-            ))}
           </div>
         ) : (
           <div>Loading</div>

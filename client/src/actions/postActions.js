@@ -45,8 +45,6 @@ export const deletePost = (postId, history, redirectBool) => (
   dispatch,
   getState
 ) => {
-  console.log(postId);
-
   axios
     .delete(`/api/posts/${postId}`, tokenConfig(getState))
     .then(res => {
