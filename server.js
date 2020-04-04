@@ -44,3 +44,10 @@ io.on("connection", function (socket) {
   // });
   console.log("Connection made");
 });
+
+module.exports = (io, socket) => ({
+  log: function (data) {
+    console.log("io", io, "\n", "socket", socket);
+    return io;
+  },
+});

@@ -29,7 +29,7 @@ router.post("/:postId", auth, async (req, res) => {
       });
       // console.log(postAuthor);
       postAuthor.notifications.push(notif);
-      //emit socket event
+      //emit socket
 
       await postAuthor.save();
     }
@@ -41,6 +41,4 @@ router.post("/:postId", auth, async (req, res) => {
   }
 });
 
-module.exports = function (getIOInstance) {
-  return router;
-};
+module.exports = router;
