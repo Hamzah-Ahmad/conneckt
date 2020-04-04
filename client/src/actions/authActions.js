@@ -34,7 +34,7 @@ export const loadUser = () => (dispatch, getState) => {
         type: LOAD_FOLLOWING,
         payload: res.data.following,
       });
-      console.log(res.data);
+      // console.log(res.data);
     })
     .catch((err) => {
       console.log(err);

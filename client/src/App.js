@@ -12,9 +12,15 @@ import ForgotPassword from "./components/auth/ForgotPassword";
 import ResetPassword from "./components/auth/ResetPassword";
 import PostPage from "./components/layout/PostPage";
 
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:5000");
+
 function App() {
   useEffect(() => {
     store.dispatch(loadUser());
+    socket.on("generateNotif", function (data) {
+      console.log(data);
+    });
   });
   return (
     <div>
