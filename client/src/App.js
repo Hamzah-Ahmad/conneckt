@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { Route, Switch } from "react-router-dom";
+import io from "socket.io-client";
 import "./App.css";
 
 import store from "./store";
@@ -12,8 +13,11 @@ import ForgotPassword from "./components/auth/ForgotPassword";
 import ResetPassword from "./components/auth/ResetPassword";
 import PostPage from "./components/layout/PostPage";
 
+const socket = io("http://localhost:5000");
 function App() {
-  useEffect(() => {});
+  useEffect(() => {
+    store.dispatch(loadUser());
+  });
   return (
     <div>
       <Switch>
