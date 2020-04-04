@@ -1,14 +1,15 @@
 require("dotenv").config();
 const express = require("express");
-const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
 var cors = require("cors");
-const server = require("http").Server(app);
-var io = require("socket.io")(server);
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"; //do this to bypass self signed certificate error when sending emails
+const app = express();
 app.use(cors());
+
+app.use(express.json());
+const server = require("http").Server(app);
 
 mongoose
   .connect(process.env.DATABASE_URL, {
@@ -37,10 +38,3 @@ if (process.env.NODE_ENV === "production") {
 
 const port = process.env.PORT || 5000;
 server.listen(port, () => console.log("Server running on port " + port));
-io.on("connection", function (socket) {
-  // socket.emit('news', { hello: 'world' });
-  // socket.on('my other event', function (data) {
-  //   console.log(data);
-  // });
-  console.log("Connection made");
-});
