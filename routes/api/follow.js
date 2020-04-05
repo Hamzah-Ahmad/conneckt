@@ -4,6 +4,7 @@ const router = express.Router();
 const auth = require("../../middleware/auth");
 const User = require("../../models/User");
 const { Notification } = require("../../models/Notification");
+const ioServer = require("../../server");
 
 //@route POST api/follow/:userId
 //@desc Making a comment on a post
@@ -43,6 +44,7 @@ router.post("/:userId", auth, async (req, res) => {
       // console.log(postAuthor);
       userToFollow.notifications.push(notif);
       await userToFollow.save();
+      ioServer.io.emit("generateNotif", notif);
       currUser.save().then((currUser) => {
         res.json(currUser.following);
       });
