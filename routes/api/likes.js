@@ -12,7 +12,7 @@ const ioServer = require("../../server");
 //@access Private
 router.post("/:postId", auth, async (req, res) => {
   // socket.emit("likedPost", { hello: "world" });
-  console.log(ioServer.io.emit);
+  // console.log(ioServer.io.emit);
   const post = await Post.findById(req.params.postId);
   if (!post) return res.status(404).json({ msg: "Post not found" });
   const postAuthor = await User.findById(post.author);

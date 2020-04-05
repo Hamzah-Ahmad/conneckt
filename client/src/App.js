@@ -5,6 +5,7 @@ import "./App.css";
 
 import store from "./store";
 import { loadUser } from "./actions/authActions";
+import { getNotifications } from "./actions/notificationsActions";
 import HomePage from "./components/layout/HomePage";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
@@ -19,7 +20,8 @@ function App() {
   useEffect(() => {
     store.dispatch(loadUser());
     socket.on("generateNotif", function (data) {
-      console.log(data);
+      console.log("TEst");
+      store.dispatch(getNotifications());
     });
   });
   return (

@@ -2,7 +2,7 @@ import React from "react";
 import { logout } from "../../actions/authActions";
 import {
   getNotifications,
-  deleteNotification
+  deleteNotification,
 } from "../../actions/notificationsActions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -18,27 +18,27 @@ import NotificationImportantIcon from "@material-ui/icons/NotificationImportant"
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   button: {
-    justifyContent: "flex-start"
+    justifyContent: "flex-start",
   },
   link: {
     textDecoration: "none",
-    color: "black"
+    color: "black",
   },
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   title: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 }));
 
-const AppNavbar = props => {
-  const [newNotif, setNewNotif] = React.useState(false);
+const AppNavbar = (props) => {
+  // const [newNotif, setNewNotif] = React.useState(false);
   React.useEffect(() => {
     props.getNotifications();
     // console.log(`Post author id: ${props.auth.user._id} & type is ${typeof props.auth.user._id}`)
@@ -64,13 +64,13 @@ const AppNavbar = props => {
           </Typography>
           <IconButton
             color="inherit"
-            onClick={event => {
+            onClick={(event) => {
               setAnchorEl(event.currentTarget);
-              setNewNotif(false);
+              // setNewNotif(false);
             }}
             className={classes.button}
           >
-            {newNotif ? (
+            {props.notifications.notifications.length > 0 ? (
               <NotificationImportantIcon />
             ) : (
               <NotificationsNoneIcon />
@@ -83,7 +83,7 @@ const AppNavbar = props => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            {props.notifications.notifications.map(notif => (
+            {props.notifications.notifications.map((notif) => (
               <MenuItem
                 onClick={() => {
                   // props.deleteNotification(notif._id);
@@ -93,7 +93,7 @@ const AppNavbar = props => {
               >
                 <Link
                   to={{
-                    pathname: `/post/${notif.post}`
+                    pathname: `/post/${notif.post}`,
                     // state: { post: notif.post }
                   }}
                   className={classes.link}
@@ -103,7 +103,7 @@ const AppNavbar = props => {
 
                 <button
                   style={{ margintLeftt: "40px" }}
-                  onClick={e => {
+                  onClick={(e) => {
                     props.deleteNotification(notif._id);
                   }}
                 >
@@ -130,13 +130,13 @@ const AppNavbar = props => {
 
 //{isAuthenticated ? authLinks : guestLinks}
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
-  notifications: state.notifications
+  notifications: state.notifications,
 });
 
 export default connect(mapStateToProps, {
   logout,
   getNotifications,
-  deleteNotification
+  deleteNotification,
 })(AppNavbar);
