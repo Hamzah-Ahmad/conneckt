@@ -20,7 +20,7 @@ function App() {
   useEffect(() => {
     store.dispatch(loadUser());
     socket.on("generateNotif", function (data) {
-      console.log("TEst");
+      console.log("Test");
       store.dispatch(getNotifications());
     });
   });

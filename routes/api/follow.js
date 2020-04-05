@@ -17,33 +17,33 @@ router.post("/:userId", auth, async (req, res) => {
   //     return res.status(404).json({ msg: "Post Author not found" });
   try {
     if (userToFollow.followers.includes(req.user._id)) {
-      console.log("Reached If");
       userToFollow.followers = userToFollow.followers.filter(
-        follower => follower.toString() !== req.user._id
+        (follower) => follower.toString() !== req.user._id
       );
       currUser.following = currUser.following.filter(
-        following => following.toString() !== userToFollow._id.toString()
+        (following) => following.toString() !== userToFollow._id.toString()
       );
       await userToFollow.save();
-      currUser.save().then(currUser => {
+      currUser.save().then((currUser) => {
         res.json(currUser.following);
       });
       // console.log(userToFollow.followers);
       // console.log("Reached if");
+    } else if (req.params.userId == req.user._id) {
+      return res.json(currUser.following);
     } else {
-      console.log("Reached else");
       userToFollow.followers.push(req.user._id);
       currUser.following.push(userToFollow._id);
       // console.log("Reached Else");
 
       const notif = await new Notification({
         user: req.user._id,
-        text: `${req.user.name} followed you`
+        text: `${req.user.name} followed you`,
       });
       // console.log(postAuthor);
       userToFollow.notifications.push(notif);
       await userToFollow.save();
-      currUser.save().then(currUser => {
+      currUser.save().then((currUser) => {
         res.json(currUser.following);
       });
     }
