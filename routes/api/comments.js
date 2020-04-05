@@ -4,6 +4,9 @@ const router = express.Router();
 const auth = require("../../middleware/auth");
 const { Comment } = require("../../models/Comment");
 const Post = require("../../models/Posts");
+const { Notification } = require("../../models/Notification");
+const User = require("../../models/User");
+const ioServer = require("../../server");
 
 //@route POST api/comments/postId
 //@desc Making a comment on a post
@@ -11,15 +14,28 @@ const Post = require("../../models/Posts");
 router.post("/:postId", auth, async (req, res) => {
   const post = await Post.findById(req.params.postId);
   if (!post) return res.status(401).json({ msg: "Post not found" });
+  const postAuthor = await User.findById(post.author);
+  if (!postAuthor)
+    return res.status(404).json({ msg: "Post Author not found" });
   try {
     const newComment = await new Comment({
       author: req.user._id,
       authorName: req.user.name,
       commentText: req.body.commentText,
-      post: post._id
+      post: post._id,
     });
     post.comments.push(newComment);
-    post.save();
+    const notif = await new Notification({
+      user: req.user._id,
+      text: `${req.user.name} commented on your post`,
+      post: post,
+    });
+    // console.log(postAuthor);
+    postAuthor.notifications.push(notif);
+    await postAuthor.save();
+    ioServer.io.emit("generateNotif", notif);
+    await post.save();
+
     res.json(post.comments);
   } catch (err) {
     res.send("Error at eomment.js " + err);
@@ -30,7 +46,7 @@ router.post("/:postId", auth, async (req, res) => {
 //@desc Making a comment on a post
 //@access Private
 router.delete("/:postId/:commentId", auth, async (req, res) => {
-  Post.findById(req.params.postId).then(post => {
+  Post.findById(req.params.postId).then((post) => {
     if (!post) return res.status(401).json({ msg: "Post not found" });
     const comment = post.comments.id(req.params.commentId);
     if (

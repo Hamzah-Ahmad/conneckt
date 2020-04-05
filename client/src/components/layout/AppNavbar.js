@@ -55,6 +55,8 @@ const AppNavbar = (props) => {
     setAnchorEl(null);
   };
 
+  const notifications = props.notifications.notifications;
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -70,7 +72,7 @@ const AppNavbar = (props) => {
             }}
             className={classes.button}
           >
-            {props.notifications.notifications.length > 0 ? (
+            {notifications.length > 0 ? (
               <NotificationImportantIcon />
             ) : (
               <NotificationsNoneIcon />
@@ -83,37 +85,41 @@ const AppNavbar = (props) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            {props.notifications.notifications.map((notif) => (
-              <MenuItem
-                onClick={() => {
-                  // props.deleteNotification(notif._id);
-                  // handleClose();
-                }}
-                key={notif._id}
-              >
-                <Link
-                  to={{
-                    pathname: `/post/${notif.post}`,
-                    // state: { post: notif.post }
+            {notifications.length > 0 ? (
+              notifications.map((notif) => (
+                <MenuItem
+                  onClick={() => {
+                    // props.deleteNotification(notif._id);
+                    // handleClose();
                   }}
-                  className={classes.link}
+                  key={notif._id}
                 >
-                  {notif.text}
-                </Link>
+                  <Link
+                    to={{
+                      pathname: `/post/${notif.post}`,
+                      // state: { post: notif.post }
+                    }}
+                    className={classes.link}
+                  >
+                    {notif.text}
+                  </Link>
 
-                <button
-                  style={{ margintLeftt: "40px" }}
-                  onClick={(e) => {
-                    props.deleteNotification(notif._id);
-                  }}
-                >
-                  x
-                </button>
-              </MenuItem>
-            ))}
+                  <button
+                    style={{ margintLeftt: "40px" }}
+                    onClick={(e) => {
+                      props.deleteNotification(notif._id);
+                    }}
+                  >
+                    x
+                  </button>
+                </MenuItem>
+              ))
+            ) : (
+              <small>No Notifications</small>
+            )}
           </Menu>
 
-          {/* <h1>{props.notifications.length}</h1> */}
+          {/* <h1>{length}</h1> */}
           <Typography>{props.auth.user && props.auth.user.name}</Typography>
           <IconButton
             color="inherit"
