@@ -17,6 +17,7 @@ import NotificationsNoneIcon from "@material-ui/icons/NotificationsNone";
 import NotificationImportantIcon from "@material-ui/icons/NotificationImportant";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import HomeIcon from "@material-ui/icons/Home";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -120,7 +121,10 @@ const AppNavbar = (props) => {
           </Menu>
 
           {/* <h1>{length}</h1> */}
-          <Typography>{props.auth.user && props.auth.user.name}</Typography>
+          {/* <Typography>{props.auth.user && props.auth.user.name}</Typography> */}
+          <Link to="/">
+            <HomeIcon style={{ color: "white" }} />
+          </Link>
           <IconButton
             color="inherit"
             onClick={props.logout}

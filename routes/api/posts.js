@@ -10,7 +10,7 @@ router.post("/", auth, async (req, res) => {
   try {
     const newPost = await Post.create({
       content: req.body.content,
-      author: req.user._id
+      author: req.user._id,
     });
     res.json(newPost);
   } catch (err) {
@@ -24,6 +24,19 @@ router.post("/", auth, async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     await Post.find({})
+      .sort({ date_posted: -1 })
+      .populate("author")
+      .exec((err, posts) => res.json(posts));
+  } catch (err) {
+    res.send(`Error occured at post GET routes: ${err}`);
+  }
+});
+//@route GET api/posts/profile/profileId
+//@desc Getting All Posts
+//@access Public
+router.get("/profile/:profileId", async (req, res) => {
+  try {
+    await Post.find({ author: req.params.profileId })
       .sort({ date_posted: -1 })
       .populate("author")
       .exec((err, posts) => res.json(posts));
@@ -76,7 +89,7 @@ router.patch("/:postId", auth, async (req, res) => {
   if (!post) return res.status(404).json({ msg: "Post not found" });
   if (req.user._id == post.author.toString()) {
     post.content = req.body.content;
-    post.save().then(updatedPost => res.json(updatedPost));
+    post.save().then((updatedPost) => res.json(updatedPost));
   } else {
     res.status(401).json({ msg: "You are not authorized to do that" });
   }

@@ -12,6 +12,7 @@ import Register from "./components/auth/Register";
 import ForgotPassword from "./components/auth/ForgotPassword";
 import ResetPassword from "./components/auth/ResetPassword";
 import PostPage from "./components/layout/PostPage";
+import ProfilePage from "./components/layout/ProfilePage";
 
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:5000");
@@ -33,6 +34,7 @@ function App() {
         <Route path="/reset/:token" component={ResetPassword} />
         <ProtectedRoute exact path="/" component={HomePage} />
         <ProtectedRoute path="/post/:postId" component={PostPage} />
+        <ProtectedRoute path="/profile/:profileId" component={ProfilePage} />
       </Switch>
     </div>
   );

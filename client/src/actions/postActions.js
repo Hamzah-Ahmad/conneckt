@@ -3,40 +3,48 @@ import {
   GET_POST,
   MAKE_POST,
   DELETE_POST,
-  EDIT_POST
+  EDIT_POST,
 } from "./types";
 import { tokenConfig } from "./authActions";
 // import { returnErrors } from "./errorActions";
 
 import axios from "axios";
-export const getPosts = () => dispatch => {
-  axios.get("/api/posts").then(posts => {
+export const getPosts = () => (dispatch) => {
+  axios.get("/api/posts").then((posts) => {
     dispatch({
       type: GET_POSTS,
-      payload: posts.data
+      payload: posts.data,
     });
   });
 };
-export const getPost = postId => dispatch => {
-  axios.get(`/api/posts/${postId}`).then(post => {
+export const getPostsByProfile = (profileId) => (dispatch) => {
+  axios.get(`/api/posts/profile/${profileId}`).then((posts) => {
+    dispatch({
+      type: GET_POSTS,
+      payload: posts.data,
+    });
+  });
+};
+export const getPost = (postId) => (dispatch) => {
+  axios.get(`/api/posts/${postId}`).then((post) => {
     dispatch({
       type: GET_POST,
-      payload: post.data
+      payload: post.data,
     });
   });
 };
-export const makePost = content => (dispatch, getState) => {
+export const makePost = (content) => (dispatch, getState) => {
   // console.log("Made Post");
   const body = JSON.stringify({ content });
   axios
     .post("/api/posts", body, tokenConfig(getState))
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: MAKE_POST,
-        payload: res.data
+        payload: res.data,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       // dispatch(returnErrors(err.response.data, err.response.status));
     });
@@ -47,16 +55,16 @@ export const deletePost = (postId, history, redirectBool) => (
 ) => {
   axios
     .delete(`/api/posts/${postId}`, tokenConfig(getState))
-    .then(res => {
+    .then((res) => {
       dispatch({
-        type: DELETE_POST
+        type: DELETE_POST,
       });
 
       if (redirectBool === true) {
         history.push("/");
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       //dispatch(returnErrors(err.response.data, err.response.status));
     });
@@ -66,13 +74,13 @@ export const editPost = (postId, content) => (dispatch, getState) => {
   const body = JSON.stringify({ content });
   axios
     .patch(`/api/posts/${postId}`, body, tokenConfig(getState))
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: EDIT_POST,
-        payload: res.data
+        payload: res.data,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       // dispatch(returnErrors(err.response.data, err.response.status));
     });
