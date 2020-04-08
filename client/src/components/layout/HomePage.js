@@ -9,6 +9,7 @@ import PostComponent from "../post/PostComponent";
 import PostTextBox from "./PostTextBox";
 import Container from "@material-ui/core/Container";
 import axios from "axios";
+import ImageUpload from "./ImageUpload";
 // import { Link } from "react-router-dom";
 
 const HomePage = (props) => {
@@ -19,9 +20,6 @@ const HomePage = (props) => {
   const posts = props.posts.posts;
   const { isAuthenticated } = props.auth;
 
-  const logFunc = () => {
-    console.log("Callbhack function ran");
-  };
   const uploadImage = async (e) => {
     const files = e.target.files[0];
     const formData = new FormData();
@@ -37,7 +35,8 @@ const HomePage = (props) => {
   return (
     <div>
       <AppNavbar />
-      <input type="file" name="file" onChange={uploadImage} />
+      {/* <input type="file" name="file" onChange={uploadImage} /> */}
+      <ImageUpload />
       <Container maxWidth="sm">
         {props.location.state && !isAuthenticated ? (
           <p color="danger">{props.location.state.msg}</p>
