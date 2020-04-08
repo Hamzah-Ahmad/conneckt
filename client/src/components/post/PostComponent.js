@@ -23,27 +23,32 @@ import EmojiEmotionsIcon from "@material-ui/icons/EmojiEmotions";
 // import GradeIcon from "@material-ui/icons/Grade";
 // import TextField from "@material-ui/core/TextField";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   comment: {
     borderRadius: "20px",
     // border: "1px solid grey",
     marginTop: theme.spacing(2),
     padding: theme.spacing(1),
     background: "#fff",
-    display: "flex"
+    display: "flex",
   },
   commentAuthor: {
-    fontSize: "12px"
+    fontSize: "12px",
   },
   commentDltBtn: {},
   commentMaterial: {
-    flex: "2"
+    flex: "2",
   },
   commentText: {
-    fontSize: "14px"
+    fontSize: "14px",
   },
   content: {
-    fontSize: 18
+    fontSize: 18,
+  },
+  image: {
+    width: 30,
+    height: 30,
+    borderRadius: 50,
   },
   paper: {
     position: "absolute",
@@ -51,28 +56,34 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3)
+    padding: theme.spacing(2, 4, 3),
   },
   post: {
     border: "1px solid grey",
     padding: theme.spacing(2),
-    marginTop: theme.spacing(4)
+    marginTop: theme.spacing(4),
   },
   postInfo: {
     display: "flex",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   title: {
-    fontSize: 14
-  }
+    fontSize: 14,
+    display: "flex",
+    alignItems: "center",
+  },
+  userName: {
+    fontSize: 18,
+    paddingLeft: 8,
+  },
 }));
 
-const PostComponent = props => {
+const PostComponent = (props) => {
   const classes = useStyles();
 
   //Simple Menu
   const [anchorEl, setAnchorEl] = useState(null);
-  const handleClick = event => {
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -128,12 +139,13 @@ const PostComponent = props => {
             props.followUser(props.post.author._id);
           }}
         >
-          {props.post.author.name}
+          <img src={props.post.author.image} className={classes.image} />
+          <div className={classes.userName}>{props.post.author.name}</div>
         </div>
         <div>
           {props.post.author._id === props.auth.user._id ? (
             <div>
-              <small> Following : {props.followReducer.following.length}</small>
+              {/* <small> Following : {props.followReducer.following.length}</small> */}
               <IconButton onClick={handleClick} size="small">
                 <MoreHorizIcon />
               </IconButton>
@@ -172,9 +184,9 @@ const PostComponent = props => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
-  followReducer: state.followReducer
+  followReducer: state.followReducer,
 });
 
 export default connect(mapStateToProps, {
@@ -183,5 +195,5 @@ export default connect(mapStateToProps, {
   likePost,
   deletePost,
   editPost,
-  followUser
+  followUser,
 })(PostComponent);

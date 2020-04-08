@@ -20,8 +20,9 @@ const socket = io.connect("http://localhost:5000");
 function App() {
   useEffect(() => {
     store.dispatch(loadUser());
+    console.log("useEffect ran on App.js");
     socket.on("generateNotif", function (data) {
-      console.log("Test");
+      // console.log("Test");
       store.dispatch(getNotifications());
     });
   });

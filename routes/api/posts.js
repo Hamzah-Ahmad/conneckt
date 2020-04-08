@@ -81,7 +81,7 @@ router.delete("/:postId", auth, async (req, res) => {
 });
 
 //@route POST api/posts/postId
-//@desc Reading All Posts
+//@desc Editing Post
 //@access Private
 router.patch("/:postId", auth, async (req, res) => {
   const postId = req.params.postId;

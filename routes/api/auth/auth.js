@@ -20,11 +20,11 @@ router.post("/", (req, res) => {
   }
 
   //Check for existing user
-  User.findOne({ email }).then(user => {
+  User.findOne({ email }).then((user) => {
     if (!user) return res.status(400).json({ msg: "User does not exist" });
 
     //Validate password
-    bcrypt.compare(password, user.password).then(isMatch => {
+    bcrypt.compare(password, user.password).then((isMatch) => {
       if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
 
       jwt.sign(
@@ -41,8 +41,9 @@ router.post("/", (req, res) => {
               email: user.email,
               followers: user.followers,
               following: user.following,
-              notifications: user.notifications
-            }
+              notifications: user.notifications,
+              image: user.image,
+            },
           });
         }
       );
@@ -59,7 +60,7 @@ router.post("/forgotPassword", (req, res) => {
     res.status(400).send("email required");
   }
   //console.error(req.body);
-  User.findOne({ email: req.body.email }).then(user => {
+  User.findOne({ email: req.body.email }).then((user) => {
     if (user == null) {
       console.error("email not in database");
       res.status(403).send("email not in db");
@@ -74,8 +75,8 @@ router.post("/forgotPassword", (req, res) => {
         service: "gmail",
         auth: {
           user: "sillypotato996@gmail.com", //put your email here
-          pass: "Haz96./." //put your email's password here.
-        }
+          pass: "Haz96./.", //put your email's password here.
+        },
       });
 
       //Use this as the link sent with the reset email in development
@@ -91,7 +92,7 @@ router.post("/forgotPassword", (req, res) => {
           "You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n" +
           "Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n" +
           `http://localhost:3000/reset/${token}\n\n` +
-          "If you did not request this, please ignore this email and your password will remain unchanged.\n"
+          "If you did not request this, please ignore this email and your password will remain unchanged.\n",
       };
 
       transporter.sendMail(mailOptions, (err, response) => {
@@ -110,27 +111,27 @@ router.get("/reset", (req, res, next) => {
   console.log(req.query.resetPasswordToken);
   User.findOne({
     resetPasswordToken: req.query.resetPasswordToken,
-    resetPasswordExpires: { $gte: Date.now() }
-  }).then(user => {
+    resetPasswordExpires: { $gte: Date.now() },
+  }).then((user) => {
     if (user == null) {
       console.log("password reset link is invalid or has expired");
       res.status(403).send("password reset link is invalid or has expired");
     } else {
       res.status(200).send({
         email: user.email,
-        message: "password reset link a-ok"
+        message: "password reset link a-ok",
       });
     }
   });
 });
 
 router.put("/updatePasswordViaEmail", (req, res, next) => {
-  User.findOne({ email: req.body.email }).then(user => {
+  User.findOne({ email: req.body.email }).then((user) => {
     if (user != null) {
       console.log("user exists in db");
       bcrypt
         .hash(req.body.password, 12)
-        .then(hashedPassword => {
+        .then((hashedPassword) => {
           user.password = hashedPassword;
           user.resetPasswordExpires = null;
           user.resetPasswordToken = null;
@@ -148,12 +149,24 @@ router.put("/updatePasswordViaEmail", (req, res, next) => {
 });
 //********FORGOT PASSWORD ROUTES END******** */
 
+//@route GET api/auth/imageUpload
+//@desc changes user image
+//@access Private
+router.post("/imageUpload", auth, async (req, res) => {
+  const user = await User.findById(req.user._id);
+  if (!user) return res.status(400).json({ msg: "User does not exist" });
+  const imageUrl = req.body.imageUrl;
+  if (!imageUrl) return res.status(400).json({ msg: "Image not found" });
+  user.image = imageUrl;
+  await user.save();
+  res.json(user.image);
+});
 //@route GET api/auth/user
 //@desc get user data
 //@access Private
 router.get("/user", auth, (req, res) => {
   User.findById(req.user._id)
     .select("-password")
-    .then(user => res.json(user));
+    .then((user) => res.json(user));
 });
 module.exports = router;

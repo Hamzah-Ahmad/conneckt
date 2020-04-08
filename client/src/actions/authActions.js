@@ -109,6 +109,15 @@ export const login = ({ email, password }) => (dispatch) => {
     });
 };
 
+//change user image
+export const changeImage = (data, cb) => async (dispatch, getState) => {
+  const imageUrl = data.data.secure_url;
+  const body = JSON.stringify({ imageUrl });
+
+  axios
+    .post("/api/auth/imageUpload", body, tokenConfig(getState))
+    .then((res) => cb());
+};
 //Logout user
 export const logout = () => {
   return {

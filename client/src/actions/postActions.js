@@ -49,6 +49,7 @@ export const makePost = (content) => (dispatch, getState) => {
       // dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
+
 export const deletePost = (postId, history, redirectBool) => (
   dispatch,
   getState

@@ -16,7 +16,7 @@ router.post("/", (req, res) => {
   }
 
   //Check for existing user
-  User.findOne({ email }).then(user => {
+  User.findOne({ email }).then((user) => {
     if (user) return res.status(400).json({ msg: "User already exists" });
 
     const newUser = new User({
@@ -25,7 +25,7 @@ router.post("/", (req, res) => {
       password,
       followers: [],
       following: [],
-      notifications: []
+      notifications: [],
     });
 
     //Create salt and hashed password
@@ -33,7 +33,7 @@ router.post("/", (req, res) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
         if (err) throw err;
         newUser.password = hash;
-        newUser.save().then(user => {
+        newUser.save().then((user) => {
           jwt.sign(
             { _id: user.id, name: user.name },
             process.env.JWT_SECRET,
@@ -48,8 +48,9 @@ router.post("/", (req, res) => {
                   email: user.email,
                   followers: user.followers,
                   following: user.following,
-                  notifications: user.notifications
-                }
+                  notifications: user.notifications,
+                  image: user.image,
+                },
               });
             }
           );
@@ -59,10 +60,10 @@ router.post("/", (req, res) => {
   });
 });
 
-//TODO
-//helper funciton to get all users in postman. remove later
-router.get("/", (req, res) => {
-  User.find().then(users => res.json(users));
-});
+// //TODO
+// //helper funciton to get all users in postman. remove later
+// router.get("/", (req, res) => {
+//   User.find().then(users => res.json(users));
+// });
 
 module.exports = router;
