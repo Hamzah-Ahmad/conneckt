@@ -1,9 +1,11 @@
 import React from "react";
-
+import { Button } from "@material-ui/core";
 import { connect } from "react-redux";
 import { getPosts } from "../../actions/postActions";
 import { getNotifications } from "../../actions/notificationsActions";
 import { loadUser, changeImage } from "../../actions/authActions";
+import EditIcon from "@material-ui/icons/Edit";
+
 import axios from "axios";
 // import { Link } from "react-router-dom";
 
@@ -26,8 +28,20 @@ const ImageUpload = (props) => {
   };
   return (
     <div>
-      {" "}
-      <input type="file" name="file" onChange={uploadImage} />
+      {/* <input type="file" name="file" onChange={uploadImage} /> */}
+      <input
+        accept="image/*"
+        style={{ display: "none" }}
+        id="raised-button-file"
+        multiple
+        type="file"
+        onChange={uploadImage}
+      />
+      <label htmlFor="raised-button-file">
+        <Button color="default" variant="contained" component="span">
+          <EditIcon /> <small style={{ marginLeft: "5px" }}>Upload New</small>
+        </Button>
+      </label>
     </div>
   );
 };
