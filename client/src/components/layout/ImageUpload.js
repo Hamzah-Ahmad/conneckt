@@ -5,11 +5,22 @@ import { getPosts } from "../../actions/postActions";
 import { getNotifications } from "../../actions/notificationsActions";
 import { loadUser, changeImage } from "../../actions/authActions";
 import EditIcon from "@material-ui/icons/Edit";
+import { makeStyles } from "@material-ui/core/styles";
 
 import axios from "axios";
 // import { Link } from "react-router-dom";
 
+const useStyles = makeStyles((theme) => ({
+  button: {
+    // [theme.breakpoints.down("md")]: {
+    //   height: 40,
+    //   width: 120,
+    // },
+  },
+}));
 const ImageUpload = (props) => {
+  const classes = useStyles();
+
   React.useEffect(() => {
     props.getPosts();
     // eslint-disable-next-line
@@ -38,7 +49,12 @@ const ImageUpload = (props) => {
         onChange={uploadImage}
       />
       <label htmlFor="raised-button-file">
-        <Button color="default" variant="contained" component="span">
+        <Button
+          color="default"
+          variant="outlined"
+          component="span"
+          className={classes.button}
+        >
           <EditIcon /> <small style={{ marginLeft: "5px" }}>Upload New</small>
         </Button>
       </label>

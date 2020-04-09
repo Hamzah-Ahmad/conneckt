@@ -33,9 +33,9 @@ export const getPost = (postId) => (dispatch) => {
     });
   });
 };
-export const makePost = (content) => (dispatch, getState) => {
+export const makePost = (content, image) => (dispatch, getState) => {
   // console.log("Made Post");
-  const body = JSON.stringify({ content });
+  const body = JSON.stringify({ content, image });
   axios
     .post("/api/posts", body, tokenConfig(getState))
     .then((res) => {

@@ -8,6 +8,7 @@ import AppNavbar from "./AppNavbar";
 import PostComponent from "../post/PostComponent";
 import PostTextBox from "./PostTextBox";
 import Container from "@material-ui/core/Container";
+import ImageUpload from "./ImageUpload";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -22,12 +23,44 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    position: "sticky",
+    top: 0,
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+      width: "15vw",
+    },
+    [theme.breakpoints.up("lg")]: {
+      display: "flex",
+    },
+  },
+  root: {
+    // [theme.breakpoints.down("sm")]: {
+    //   backgroundColor: "yellow",
+    // },
+    // [theme.breakpoints.up("md")]: {
+    //   backgroundColor: "purple",
+    // },
+    // [theme.breakpoints.up("lg")]: {
+    //   backgroundColor: "green",
+    // },
   },
   userImage: {
     marginTop: 30,
+    marginBottom: 15,
     height: 160,
     width: 160,
     borderRadius: 100,
+
+    [theme.breakpoints.down("md")]: {
+      height: 100,
+      width: 100,
+    },
+    [theme.breakpoints.up("lg")]: {
+      display: "flex",
+    },
   },
 }));
 const HomePage = (props) => {
@@ -37,6 +70,9 @@ const HomePage = (props) => {
     props.getPosts();
     // eslint-disable-next-line
   }, [props.comments, props.likes, props.singlePost]);
+  // React.useEffect(() => {
+  //   props.loadUser();
+  // }, []);
   const posts = props.posts.posts;
   const { isAuthenticated } = props.auth;
 
@@ -53,15 +89,24 @@ const HomePage = (props) => {
   //   // console.log(imageUrl);
   // };
   return (
-    <div>
+    <div className={classes.root}>
       <AppNavbar />
       {/* <input type="file" name="file" onChange={uploadImage} /> */}
       {/* <ImageUpload /> */}
       <div className={classes.homePage}>
-        <div className={classes.sideBar}>
-          <img src={props.auth.user.image} className={classes.userImage} />
-        </div>
-        <Container maxWidth="sm" className={classes.mainSection}>
+        {props.followReducer.followers && (
+          <div className={classes.sideBar}>
+            <img src={props.auth.user.image} className={classes.userImage} />
+            <ImageUpload />
+            <div style={{ marginTop: "20px" }}>
+              Following: {props.followReducer.following.length}
+            </div>
+            <div style={{ marginTop: "20px" }}>
+              Followers: {props.followReducer.followers.length}
+            </div>
+          </div>
+        )}
+        <Container maxWidth="md" className={classes.mainSection}>
           {props.location.state && !isAuthenticated ? (
             <p color="danger">{props.location.state.msg}</p>
           ) : null}

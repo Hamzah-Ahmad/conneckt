@@ -5,6 +5,7 @@ import { likePost } from "../../actions/likeActions";
 import { deletePost, editPost } from "../../actions/postActions";
 import { followUser } from "../../actions/followActions";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
@@ -62,6 +63,23 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid grey",
     padding: theme.spacing(2),
     marginTop: theme.spacing(4),
+  },
+  postImage: {
+    display: "block",
+    height: 400,
+    width: 500,
+    [theme.breakpoints.down("xs")]: {
+      height: 180,
+      width: 240,
+    },
+    [theme.breakpoints.up("md")]: {
+      height: 400,
+      width: 500,
+    },
+    // [theme.breakpoints.down("lg")]: {
+    //   height: 400,
+    //   width: 500,
+    // },
   },
   postInfo: {
     display: "flex",
@@ -135,12 +153,14 @@ const PostComponent = (props) => {
       <div className={classes.postInfo}>
         <div
           className={classes.title}
-          onClick={() => {
-            props.followUser(props.post.author._id);
-          }}
+          // onClick={() => {
+          //   props.followUser(props.post.author._id);
+          // }}
         >
           <img src={props.post.author.image} className={classes.image} />
-          <div className={classes.userName}>{props.post.author.name}</div>
+          <Link to={`/profile/${props.post.author._id}`}>
+            <div className={classes.userName}>{props.post.author.name}</div>
+          </Link>
         </div>
         <div>
           {props.post.author._id === props.auth.user._id ? (
@@ -154,6 +174,9 @@ const PostComponent = (props) => {
         </div>
       </div>
       <div className={classes.content}>{props.post.content}</div>
+      {props.post.image ? (
+        <img src={props.post.image} alt="Image" className={classes.postImage} />
+      ) : null}
       <IconButton
         onClick={() => {
           props.likePost(props.post._id);

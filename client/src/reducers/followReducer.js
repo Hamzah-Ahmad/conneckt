@@ -7,6 +7,7 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case FOLLOW_USER:
       return {
+        ...state,
         following: action.payload,
       };
     case LOAD_FOLLOWERS:

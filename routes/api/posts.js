@@ -10,6 +10,7 @@ router.post("/", auth, async (req, res) => {
   try {
     const newPost = await Post.create({
       content: req.body.content,
+      image: req.body.image,
       author: req.user._id,
     });
     res.json(newPost);

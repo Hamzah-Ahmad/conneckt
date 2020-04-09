@@ -17,27 +17,27 @@ import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import ChatOutlinedIcon from "@material-ui/icons/ChatOutlined";
 import EmojiEmotionsIcon from "@material-ui/icons/EmojiEmotions";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   comment: {
     borderRadius: "20px",
     // border: "1px solid grey",
     marginTop: theme.spacing(2),
     padding: theme.spacing(1),
     background: "#fff",
-    display: "flex"
+    display: "flex",
   },
   commentAuthor: {
-    fontSize: "12px"
+    fontSize: "12px",
   },
   commentDltBtn: {},
   commentMaterial: {
-    flex: "2"
+    flex: "2",
   },
   commentText: {
-    fontSize: "14px"
+    fontSize: "14px",
   },
   content: {
-    fontSize: 18
+    fontSize: 18,
   },
   paper: {
     position: "absolute",
@@ -45,23 +45,23 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3)
+    padding: theme.spacing(2, 4, 3),
   },
   post: {
     border: "1px solid grey",
     padding: theme.spacing(2),
-    margin: theme.spacing(2)
+    margin: theme.spacing(2),
   },
   postInfo: {
     display: "flex",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   title: {
-    fontSize: 14
-  }
+    fontSize: 14,
+  },
 }));
 
-const PostPage = props => {
+const PostPage = (props) => {
   useEffect(() => {
     // console.log("getPost ran " + props.match.params.postId);
     props.getPost(props.match.params.postId);
@@ -71,7 +71,7 @@ const PostPage = props => {
 
   //Simple Menu
   const [anchorEl, setAnchorEl] = useState(null);
-  const handleClick = event => {
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -175,12 +175,12 @@ const PostPage = props => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
   post: state.singlePost.post,
   comments: state.comments,
   likes: state.likes,
-  followReducer: state.followReducer
+  followReducer: state.followReducer,
 });
 export default connect(mapStateToProps, {
   getPost,
@@ -188,5 +188,5 @@ export default connect(mapStateToProps, {
   deleteComment,
   likePost,
   deletePost,
-  editPost
+  editPost,
 })(PostPage);
