@@ -11,11 +11,10 @@ import axios from "axios";
 // import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-  button: {
-    // [theme.breakpoints.down("md")]: {
-    //   height: 40,
-    //   width: 120,
-    // },
+  editIcon: {
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
   },
 }));
 const ImageUpload = (props) => {
@@ -55,7 +54,8 @@ const ImageUpload = (props) => {
           component="span"
           className={classes.button}
         >
-          <EditIcon /> <small style={{ marginLeft: "5px" }}>Upload New</small>
+          <EditIcon className={classes.editIcon} />{" "}
+          <small style={{ marginLeft: "5px" }}>Upload New</small>
         </Button>
       </label>
     </div>

@@ -45,11 +45,17 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     fontSize: 18,
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 14,
+    },
   },
   image: {
-    width: 30,
-    height: 30,
+    width: 40,
+    height: 40,
     borderRadius: 50,
+  },
+  likeIcon: {
+    paddingLeft: 0,
   },
   paper: {
     position: "absolute",
@@ -66,16 +72,17 @@ const useStyles = makeStyles((theme) => ({
   },
   postImage: {
     display: "block",
-    height: 400,
-    width: 500,
+    maxHeight: 400,
+    maxWidth: 500,
     [theme.breakpoints.down("xs")]: {
-      height: 180,
-      width: 240,
+      maxHeight: 180,
+      maxWidth: 240,
     },
     [theme.breakpoints.up("md")]: {
-      height: 400,
-      width: 500,
+      maxHeight: 400,
+      maxWidth: 500,
     },
+    marginTop: 8,
     // [theme.breakpoints.down("lg")]: {
     //   height: 400,
     //   width: 500,
@@ -89,6 +96,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
     display: "flex",
     alignItems: "center",
+    marginBottom: 15,
   },
   userName: {
     fontSize: 18,
@@ -181,6 +189,7 @@ const PostComponent = (props) => {
         onClick={() => {
           props.likePost(props.post._id);
         }}
+        className={classes.likeIcon}
       >
         {props.post.likes.includes(props.auth.user._id) ? (
           <EmojiEmotionsIcon color="primary" />

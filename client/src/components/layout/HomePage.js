@@ -73,29 +73,12 @@ const HomePage = (props) => {
     props.getPosts();
     // eslint-disable-next-line
   }, [props.comments, props.likes, props.singlePost]);
-  // React.useEffect(() => {
-  //   props.loadUser();
-  // }, []);
   const posts = props.posts.posts;
   const { isAuthenticated } = props.auth;
 
-  // const uploadImage = async (e) => {
-  //   const files = e.target.files[0];
-  //   const formData = new FormData();
-  //   formData.append("upload_preset", "connekt");
-  //   formData.append("file", files);
-  //   const data = await axios.post(
-  //     "https://api.cloudinary.com/v1_1/dbqbqfiyn/image/upload",
-  //     formData
-  //   );
-  //   props.changeImage(data, props.loadUser);
-  //   // console.log(imageUrl);
-  // };
   return (
     <div className={classes.root}>
       <AppNavbar />
-      {/* <input type="file" name="file" onChange={uploadImage} /> */}
-      {/* <ImageUpload /> */}
       <div className={classes.homePage}>
         {props.followReducer.followers && (
           <div className={classes.sideBar}>

@@ -9,6 +9,9 @@ import AppNavbar from "./AppNavbar";
 import PostComponent from "../post/PostComponent";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import PersonAddDisabledIcon from "@material-ui/icons/PersonAddDisabled";
 
 const useStyles = makeStyles((theme) => ({
   followInfo: {
@@ -20,6 +23,15 @@ const useStyles = makeStyles((theme) => ({
       marginTop: 3,
       fontSize: 14,
     },
+  },
+  followBtn: {
+    padding: 4,
+    fontSize: 10,
+    marginTop: 7,
+  },
+  followSpan: {
+    display: "flex",
+    alignItems: "center",
   },
   profileInfo: {
     display: "flex",
@@ -59,7 +71,7 @@ const ProfilePage = (props) => {
   return (
     <div>
       <AppNavbar />
-      <Container maxWidth="sm">
+      <Container maxWidth="md">
         <div></div>
         {props.location.state && !isAuthenticated ? (
           <p color="danger">{props.location.state.msg}</p>
@@ -82,17 +94,31 @@ const ProfilePage = (props) => {
                     <div>Following: {posts[0].author.following.length}</div>
                   </div>
                   {posts[0].author._id !== props.auth.user._id ? (
-                    <button
+                    <Button
+                      className={classes.followBtn}
+                      variant="outlined"
                       onClick={() => props.followUser(posts[0].author._id)}
                     >
                       {props.followReducer.following.includes(
                         posts[0].author._id
                       ) ? (
-                        <span>Unfollow</span>
+                        <span className={classes.followSpan}>
+                          <PersonAddDisabledIcon
+                            fontSize="small"
+                            style={{ marginRight: "5px" }}
+                          />
+                          Unfollow
+                        </span>
                       ) : (
-                        <span>Follow</span>
+                        <span className={classes.followSpan}>
+                          <PersonAddIcon
+                            fontSize="small"
+                            style={{ marginRight: "5px" }}
+                          />
+                          Follow
+                        </span>
                       )}
-                    </button>
+                    </Button>
                   ) : null}
                 </div>
               </div>
