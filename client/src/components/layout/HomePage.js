@@ -37,8 +37,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   root: {
-    // [theme.breakpoints.down("sm")]: {
+    // [theme.breakpoints.down("xs")]: {
     //   backgroundColor: "yellow",
+    // },
+    // [theme.breakpoints.up("sm")]: {
+    //   backgroundColor: "blue",
     // },
     // [theme.breakpoints.up("md")]: {
     //   backgroundColor: "purple",
