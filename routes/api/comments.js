@@ -17,14 +17,23 @@ router.post("/:postId", auth, async (req, res) => {
   const postAuthor = await User.findById(post.author);
   if (!postAuthor)
     return res.status(404).json({ msg: "Post Author not found" });
+  const commentAuthor = await User.findById(req.user._id);
+  if (!commentAuthor)
+    return res.status(404).json({ msg: "Comment Author not found" });
   try {
     const newComment = await new Comment({
-      author: req.user._id,
-      authorName: req.user.name,
+      author: commentAuthor._id.toString(),
+      authorName: commentAuthor.name,
+      image: commentAuthor.image,
       commentText: req.body.commentText,
       post: post._id,
     });
     post.comments.push(newComment);
+    // console.log(commentAuthor._id);
+    // console.log(req.user._id);
+    // console.log(typeof commentAuthor._id);
+    // console.log(typeof req.user._id);
+    // console.log(commentAuthor);
     const notif = await new Notification({
       user: req.user._id,
       text: `${req.user.name} commented on your post`,
