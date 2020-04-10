@@ -2,26 +2,23 @@ const mongoose = require("mongoose");
 const Post = require("../models/Posts");
 
 const NotificationSchema = new mongoose.Schema({
-  // from_user: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "User"
-  // },
+  user: String,
   text: {
     type: String,
-    required: true
+    required: true,
   },
   post: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Post"
+    ref: "Post",
   },
   date: {
     type: Date,
-    default: Date.now()
-  }
+    default: Date.now(),
+  },
 });
 const Notification = mongoose.model("Notification", NotificationSchema);
 
 module.exports = {
   Notification: Notification,
-  NotificationSchema: NotificationSchema
+  NotificationSchema: NotificationSchema,
 };

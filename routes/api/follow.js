@@ -38,7 +38,7 @@ router.post("/:userId", auth, async (req, res) => {
       // console.log("Reached Else");
 
       const notif = await new Notification({
-        user: req.user._id,
+        user: req.user._id.toString(),
         text: `${req.user.name} followed you`,
       });
       // console.log(postAuthor);

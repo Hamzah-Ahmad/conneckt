@@ -33,6 +33,21 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
+  notificaiton: {
+    // backgroundColor: "red",
+    width: 320,
+    display: "flex",
+    justifyContent: "space-between",
+    fontSize: 14,
+    borderBottom: "1px solid black",
+    [theme.breakpoints.down("xs")]: {
+      width: 280,
+      fontSize: 14,
+    },
+  },
+  notifDelete: {
+    float: "right",
+  },
   title: {
     flexGrow: 1,
   },
@@ -94,19 +109,32 @@ const AppNavbar = (props) => {
                     // handleClose();
                   }}
                   key={notif._id}
+                  className={classes.notificaiton}
                 >
-                  <Link
-                    to={{
-                      pathname: `/post/${notif.post}`,
-                      // state: { post: notif.post }
-                    }}
-                    className={classes.link}
-                  >
-                    {notif.text}
-                  </Link>
+                  {notif.post ? (
+                    <Link
+                      to={{
+                        pathname: `/post/${notif.post}`,
+                        // state: { post: notif.post }
+                      }}
+                      className={classes.link}
+                    >
+                      {notif.text}
+                    </Link>
+                  ) : (
+                    <Link
+                      to={{
+                        pathname: `/profile/${notif.user}`,
+                        // state: { post: notif.post }
+                      }}
+                      className={classes.link}
+                    >
+                      {notif.text}
+                    </Link>
+                  )}
 
                   <button
-                    style={{ margintLeftt: "40px" }}
+                    className={classes.notifDelete}
                     onClick={(e) => {
                       props.deleteNotification(notif._id);
                     }}

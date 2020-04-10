@@ -73,6 +73,7 @@ const HomePage = (props) => {
     props.getPosts();
     // eslint-disable-next-line
   }, [props.comments, props.likes, props.singlePost]);
+
   const posts = props.posts.posts;
   const { isAuthenticated } = props.auth;
 

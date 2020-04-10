@@ -35,7 +35,7 @@ router.post("/:postId", auth, async (req, res) => {
     // console.log(typeof req.user._id);
     // console.log(commentAuthor);
     const notif = await new Notification({
-      user: req.user._id,
+      user: req.user._id.toString(),
       text: `${req.user.name} commented on your post`,
       post: post,
     });

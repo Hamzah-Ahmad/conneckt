@@ -26,7 +26,7 @@ router.post("/:postId", auth, async (req, res) => {
     } else {
       post.likes.push(req.user._id);
       const notif = await new Notification({
-        user: req.user._id,
+        user: req.user._id.toString(),
         text: `${req.user.name} liked your post`,
         post: post,
       });

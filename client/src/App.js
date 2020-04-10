@@ -22,7 +22,7 @@ function App() {
     store.dispatch(loadUser());
     console.log("useEffect ran on App.js");
     socket.on("generateNotif", function (data) {
-      // console.log("Test");
+      console.log("Test");
       store.dispatch(getNotifications());
     });
   });
