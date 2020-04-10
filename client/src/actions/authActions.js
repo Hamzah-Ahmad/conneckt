@@ -62,12 +62,21 @@ export const register = ({ name, email, password }) => (dispatch) => {
 
   axios
     .post("/api/users", body, config)
-    .then((res) =>
+    .then((res) => {
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data,
-      })
-    )
+      });
+
+      dispatch({
+        type: LOAD_FOLLOWERS,
+        payload: res.data.user.followers,
+      });
+      dispatch({
+        type: LOAD_FOLLOWING,
+        payload: res.data.user.following,
+      });
+    })
     .catch((err) => {
       console.log(err);
       dispatch(
