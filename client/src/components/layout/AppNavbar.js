@@ -34,6 +34,12 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
+  menuItem: {
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 14,
+      // width: 200,
+    },
+  },
   notificaiton: {
     width: 400,
     margin: 0,
@@ -43,8 +49,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     fontSize: 16,
     [theme.breakpoints.down("xs")]: {
-      width: 270,
-      fontSize: 12,
+      width: 290,
+      fontSize: 6,
     },
   },
   notifDelete: {
@@ -118,6 +124,7 @@ const AppNavbar = (props) => {
                         onClick={() => {
                           props.deleteNotification(notif._id);
                         }}
+                        className={classes.menuItem}
                       >
                         {notif.text}
                       </MenuItem>
