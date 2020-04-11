@@ -25,7 +25,7 @@ router.post("/", auth, async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     await Post.find({})
-      .sort({ date_posted: -1 })
+      .sort({ _id: -1 })
       .populate("author")
       .exec((err, posts) => res.json(posts));
   } catch (err) {
@@ -38,7 +38,7 @@ router.get("/", async (req, res) => {
 router.get("/profile/:profileId", async (req, res) => {
   try {
     await Post.find({ author: req.params.profileId })
-      .sort({ date_posted: -1 })
+      .sort({ _id: -1 })
       .populate("author")
       .exec((err, posts) => res.json(posts));
   } catch (err) {

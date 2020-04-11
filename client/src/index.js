@@ -12,9 +12,9 @@ import store from "./store";
 const innerTheme = createMuiTheme({
   palette: {
     primary: {
-      main: "#3d5afe"
-    }
-  }
+      main: "#1e88e5",
+    },
+  },
 });
 ReactDOM.render(
   <Provider store={store}>

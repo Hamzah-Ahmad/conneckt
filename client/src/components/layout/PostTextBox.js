@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
   button: {
     textTransform: "none",
     wordSpacing: "5px",
+    borderRadius: "10px",
   },
   newPost: {
     border: "1px solid #bfbfbf",
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     height: 150,
     width: 180,
     display: "block",
+    paddingTop: 10,
   },
   submitBtn: {
     paddingRight: theme.spacing(1),

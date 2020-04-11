@@ -8,7 +8,7 @@ const User = require("../../models/User");
 //@desc Making a comment on a post
 //@access Private
 router.get("/", auth, async (req, res) => {
-  User.findById(req.user._id).then(user => {
+  User.findById(req.user._id).then((user) => {
     if (!user) {
       res.status(401).json({ msg: "User not found" });
     } else {
@@ -24,12 +24,12 @@ router.get("/", auth, async (req, res) => {
 router.delete("/:notifId", auth, async (req, res) => {
   const notifId = req.params.notifId;
   // console.log("reached delete");
-  User.findById(req.user._id).then(async user => {
+  User.findById(req.user._id).then(async (user) => {
     if (!user) {
       res.status(401).json({ msg: "User not found" });
     } else {
       user.notifications = user.notifications.filter(
-        notif => notif._id.toString() != notifId
+        (notif) => notif._id.toString() != notifId
       );
       await user.save();
       // console.log(user.notifications)

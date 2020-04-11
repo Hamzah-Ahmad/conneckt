@@ -14,14 +14,15 @@ import Typography from "@material-ui/core/Typography";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import IconButton from "@material-ui/core/IconButton";
 import NotificationsNoneIcon from "@material-ui/icons/NotificationsNone";
-import NotificationImportantIcon from "@material-ui/icons/NotificationImportant";
 import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import HomeIcon from "@material-ui/icons/Home";
 import ClearIcon from "@material-ui/icons/Clear";
+import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles((theme) => ({
+  offset: theme.mixins.toolbar,
   button: {
     justifyContent: "flex-start",
   },
@@ -57,7 +58,26 @@ const useStyles = makeStyles((theme) => ({
     float: "right",
   },
   title: {
+    color: "#fff",
     flexGrow: 1,
+    marginLeft: 50,
+    [theme.breakpoints.down("md")]: {
+      marginLeft: 30,
+    },
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: 10,
+    },
+    [theme.breakpoints.down("xs")]: {
+      marginLeft: 0,
+    },
+  },
+  userImg: {
+    height: 30,
+    width: 30,
+    borderRadius: 100,
+    [theme.breakpoints.down("xs")]: {
+      display: "none",
+    },
   },
 }));
 
@@ -75,14 +95,20 @@ const AppNavbar = (props) => {
   };
 
   const notifications = props.notifications.notifications;
-
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <Typography variant="h4" className={classes.title}>
-            Connekt
+            <Link to="/" style={{ color: "white" }}>
+              Connekt
+            </Link>
           </Typography>
+          <img
+            src={props.auth.user.image}
+            alt="Profile Img"
+            className={classes.userImg}
+          />
           <IconButton
             color="inherit"
             onClick={(event) => {
@@ -167,6 +193,7 @@ const AppNavbar = (props) => {
           </IconButton>
         </Toolbar>
       </AppBar>
+      <div className={classes.offset} />
     </div>
   );
 };

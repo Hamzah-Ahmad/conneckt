@@ -8,7 +8,7 @@ import { postComment, deleteComment } from "../../actions/commentActions";
 import CommentBoxComponent from "../post/CommentBoxComponent";
 import AppNavBar from "./AppNavbar";
 import { Link } from "react-router-dom";
-
+import Spinner from "../layout/Spinner";
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
@@ -39,7 +39,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "14px",
   },
   content: {
-    fontSize: 18,
+    fontSize: 20,
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 14,
+    },
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   image: {
     width: 40,
@@ -84,7 +89,7 @@ const PostPage = (props) => {
     // console.log("getPost ran " + props.match.params.postId);
     props.getPost(props.match.params.postId);
     //eslint-disable-next-line
-  }, [props.comments, props.likes, props.singlePost]);
+  });
   const classes = useStyles();
 
   //Simple Menu
@@ -190,7 +195,7 @@ const PostPage = (props) => {
               />
             </div>
           ) : (
-            <div>Loading</div>
+            <Spinner />
           )
         ) : (
           <div>Post Not Found</div>

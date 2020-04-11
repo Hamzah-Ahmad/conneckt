@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { getPostsByProfile } from "../../actions/postActions";
 import { getNotifications } from "../../actions/notificationsActions";
 import { followUser } from "../../actions/followActions";
-
+import Spinner from "./Spinner";
 import { loadUser } from "../../actions/authActions";
 import AppNavbar from "./AppNavbar";
 import PostComponent from "../post/PostComponent";
@@ -57,86 +57,92 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const ProfilePage = (props) => {
-  const [profile, setProfile] = useState();
   const classes = useStyles();
-
+  const [isLoading, setIsLoading] = useState(true);
   const posts = props.posts.posts;
   const { isAuthenticated } = props.auth;
   React.useEffect(() => {
+    setTimeout(() => setIsLoading(false), 500);
     props.getPostsByProfile(props.match.params.profileId);
-    // console.log(typeof props.auth.user._id);
     // eslint-disable-next-line
   }, [props.comments, props.likes, props.singlePost, props.followReducer]);
 
   return (
     <div>
       <AppNavbar />
-      <Container maxWidth="md">
-        <div></div>
-        {props.location.state && !isAuthenticated ? (
-          <p color="danger">{props.location.state.msg}</p>
-        ) : null}
-        <div>
-          {posts && posts.length > 0 ? (
-            <div>
-              <div className={classes.profileInfo}>
-                <img
-                  src={posts[0].author.image}
-                  alt="Profile Image"
-                  className={classes.profileImg}
-                />
-                <div>
-                  <div className={classes.username}>{posts[0].author.name}</div>
-                  <div className={classes.followInfo}>
-                    <div style={{ marginRight: "10px" }}>
-                      Followers: {posts[0].author.followers.length}
+      {!isLoading ? (
+        <Container maxWidth="md">
+          {props.location.state && !isAuthenticated ? (
+            <p color="danger">{props.location.state.msg}</p>
+          ) : null}
+          <div>
+            {posts && posts.length > 0 ? (
+              <div>
+                <div className={classes.profileInfo}>
+                  <img
+                    src={posts[0].author.image}
+                    alt="Profile Image"
+                    className={classes.profileImg}
+                  />
+                  <div>
+                    <div className={classes.username}>
+                      {posts[0].author.name}
                     </div>
-                    <div>Following: {posts[0].author.following.length}</div>
+                    <div className={classes.followInfo}>
+                      <div style={{ marginRight: "10px" }}>
+                        Followers: {posts[0].author.followers.length}
+                      </div>
+                      <div>Following: {posts[0].author.following.length}</div>
+                    </div>
+                    {posts[0].author._id !== props.auth.user._id ? (
+                      <Button
+                        className={classes.followBtn}
+                        variant="outlined"
+                        onClick={() => props.followUser(posts[0].author._id)}
+                      >
+                        {props.followReducer.following.includes(
+                          posts[0].author._id
+                        ) ? (
+                          <span className={classes.followSpan}>
+                            <PersonAddDisabledIcon
+                              fontSize="small"
+                              style={{ marginRight: "5px" }}
+                            />
+                            Unfollow
+                          </span>
+                        ) : (
+                          <span className={classes.followSpan}>
+                            <PersonAddIcon
+                              fontSize="small"
+                              style={{ marginRight: "5px" }}
+                            />
+                            Follow
+                          </span>
+                        )}
+                      </Button>
+                    ) : null}
                   </div>
-                  {posts[0].author._id !== props.auth.user._id ? (
-                    <Button
-                      className={classes.followBtn}
-                      variant="outlined"
-                      onClick={() => props.followUser(posts[0].author._id)}
-                    >
-                      {props.followReducer.following.includes(
-                        posts[0].author._id
-                      ) ? (
-                        <span className={classes.followSpan}>
-                          <PersonAddDisabledIcon
-                            fontSize="small"
-                            style={{ marginRight: "5px" }}
-                          />
-                          Unfollow
-                        </span>
-                      ) : (
-                        <span className={classes.followSpan}>
-                          <PersonAddIcon
-                            fontSize="small"
-                            style={{ marginRight: "5px" }}
-                          />
-                          Follow
-                        </span>
-                      )}
-                    </Button>
-                  ) : null}
                 </div>
               </div>
-            </div>
-          ) : null}
-          {posts &&
-            posts.map((post) => {
-              //   console.log(typeof post.author._id);
-              //   console.log(props.auth.user._id);
+            ) : (
+              <Spinner />
+            )}
+            {posts &&
+              posts.map((post) => {
+                //   console.log(typeof post.author._id);
+                //   console.log(props.auth.user._id);
 
-              return (
-                <div key={post._id}>
-                  <PostComponent post={post} />
-                </div>
-              );
-            })}
-        </div>
-      </Container>
+                return (
+                  <div key={post._id}>
+                    <PostComponent post={post} />
+                  </div>
+                );
+              })}
+          </div>
+        </Container>
+      ) : (
+        <Spinner />
+      )}
     </div>
   );
 };

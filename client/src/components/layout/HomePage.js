@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { connect } from "react-redux";
 import { getPosts } from "../../actions/postActions";
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   mainSection: {},
   sideBar: {
-    background: "#fafafa",
+    background: "#fff",
     height: "100vh",
     width: "18vw",
     display: "flex",
@@ -53,8 +53,8 @@ const useStyles = makeStyles((theme) => ({
   userImage: {
     marginTop: 30,
     marginBottom: 15,
-    height: 160,
-    width: 160,
+    height: 180,
+    width: 180,
     borderRadius: 100,
 
     [theme.breakpoints.down("md")]: {
@@ -76,6 +76,7 @@ const HomePage = (props) => {
 
   const posts = props.posts.posts;
   const { isAuthenticated } = props.auth;
+  const [limitPosts, setLimitPosts] = useState(false);
 
   return (
     <div className={classes.root}>
@@ -100,12 +101,23 @@ const HomePage = (props) => {
 
           <div>
             <PostTextBox />
-            {posts &&
-              posts.map((post) => (
-                <div key={post._id}>
-                  <PostComponent post={post} />
-                </div>
-              ))}
+            <button onClick={() => setLimitPosts(!limitPosts)}>
+              View posts by
+            </button>
+            {posts && limitPosts
+              ? posts.map((post) => (
+                  <div key={post._id}>
+                    <PostComponent post={post} />
+                  </div>
+                ))
+              : posts.map((post) => {
+                  if (props.followReducer.following.includes(post.author._id))
+                    return (
+                      <div key={post._id}>
+                        <PostComponent post={post} />
+                      </div>
+                    );
+                })}
           </div>
         </Container>
       </div>

@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import EditPost from "./EditPost";
 import { postComment, deleteComment } from "../../actions/commentActions";
 import { likePost } from "../../actions/likeActions";
-import { deletePost, editPost } from "../../actions/postActions";
+import {
+  deletePost,
+  editPost,
+  getPostsByProfile,
+} from "../../actions/postActions";
 import { followUser } from "../../actions/followActions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -44,9 +48,11 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "14px",
   },
   content: {
-    fontSize: 18,
+    fontSize: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
     [theme.breakpoints.down("xs")]: {
-      fontSize: 14,
+      fontSize: 16,
     },
   },
   image: {
@@ -230,5 +236,6 @@ export default connect(mapStateToProps, {
   likePost,
   deletePost,
   editPost,
+  getPostsByProfile,
   followUser,
 })(PostComponent);

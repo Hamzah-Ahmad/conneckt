@@ -17,7 +17,6 @@ import axios from "axios";
 //getState allows us to access part of our state. We use it here to get token from the state
 //We want to call loadUser all the time to get constantly get user info as jwt is stateless so user info is not saved in server state
 export const loadUser = () => (dispatch, getState) => {
-  console.log("Load User Ran");
   //User Loading --> sets isLoading to true
   dispatch({ type: USER_LOADING });
   axios
