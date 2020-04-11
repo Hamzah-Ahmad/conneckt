@@ -9,14 +9,22 @@ import axios from "axios";
 import ImageIcon from "@material-ui/icons/Image";
 
 const useStyles = makeStyles((theme) => ({
+  button: {
+    textTransform: "none",
+    wordSpacing: "5px",
+  },
   newPost: {
-    border: "1px solid black",
+    border: "1px solid #bfbfbf",
+    backgroundColor: "#fff",
+
+    borderRadius: 20,
     marginTop: 15,
     padding: 15,
   },
   postTextBox: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(2),
+    backgroundColor: "#fff",
   },
   previewImg: {
     height: 150,
@@ -68,7 +76,12 @@ const PostTextBox = (props) => {
         onChange={uploadPostImage}
       />
       <label htmlFor="raised-button-file-post">
-        <Button color="default" variant="outlined" component="span">
+        <Button
+          color="default"
+          variant="outlined"
+          component="span"
+          className={classes.button}
+        >
           Photo <ImageIcon style={{ paddingLeft: "10px" }} />
         </Button>
       </label>

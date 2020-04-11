@@ -66,7 +66,10 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
   },
   post: {
-    border: "1px solid grey",
+    border: "1px solid #bfbfbf",
+    borderRadius: 20,
+    backgroundColor: "#fff",
+
     padding: theme.spacing(2),
     marginTop: theme.spacing(4),
   },

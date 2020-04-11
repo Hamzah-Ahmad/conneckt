@@ -2,7 +2,9 @@
 .App {
   font-family: "Montserrat", sans-serif;
 }
-
+body {
+  background-color: #f7f7f7;
+}
 #panel1a-header {
   /* background-color: aquamarine; */
   min-height: 30px !important;
@@ -14,4 +16,9 @@
 
 .MuiExpansionPanelSummary-content {
   border-top: none !important;
+}
+
+a {
+  text-decoration: none;
+  color: #333333;
 }

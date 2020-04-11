@@ -58,9 +58,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
   },
   post: {
-    border: "1px solid grey",
+    border: "1px solid #bfbfbf",
+    borderRadius: 20,
     padding: theme.spacing(2),
     margin: theme.spacing(2),
+    backgroundColor: "#fff",
   },
   postInfo: {
     display: "flex",

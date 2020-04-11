@@ -27,14 +27,14 @@ export const loadUser = () => (dispatch, getState) => {
         type: USER_LOADED,
         payload: res.data,
       });
-      // dispatch({
-      //   type: LOAD_FOLLOWERS,
-      //   payload: res.data.followers,
-      // });
-      // dispatch({
-      //   type: LOAD_FOLLOWING,
-      //   payload: res.data.following,
-      // });
+      dispatch({
+        type: LOAD_FOLLOWERS,
+        payload: res.data.followers,
+      });
+      dispatch({
+        type: LOAD_FOLLOWING,
+        payload: res.data.following,
+      });
       // console.log(res.data);
     })
     .catch((err) => {

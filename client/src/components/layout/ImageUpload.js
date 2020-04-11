@@ -11,6 +11,10 @@ import axios from "axios";
 // import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
+  button: {
+    textTransform: "none",
+    wordSpacing: "5px",
+  },
   editIcon: {
     [theme.breakpoints.down("md")]: {
       display: "none",

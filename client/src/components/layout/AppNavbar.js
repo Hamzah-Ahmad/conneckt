@@ -15,9 +15,11 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import IconButton from "@material-ui/core/IconButton";
 import NotificationsNoneIcon from "@material-ui/icons/NotificationsNone";
 import NotificationImportantIcon from "@material-ui/icons/NotificationImportant";
+import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import HomeIcon from "@material-ui/icons/Home";
+import ClearIcon from "@material-ui/icons/Clear";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -35,14 +37,13 @@ const useStyles = makeStyles((theme) => ({
   },
   notificaiton: {
     // backgroundColor: "red",
-    width: 320,
+    width: 400,
     display: "flex",
     justifyContent: "space-between",
     fontSize: 14,
-    borderBottom: "1px solid black",
     [theme.breakpoints.down("xs")]: {
-      width: 280,
-      fontSize: 14,
+      width: 310,
+      fontSize: 12,
     },
   },
   notifDelete: {
@@ -89,7 +90,7 @@ const AppNavbar = (props) => {
             className={classes.button}
           >
             {notifications.length > 0 ? (
-              <NotificationImportantIcon />
+              <NotificationsActiveIcon style={{ color: "red" }} />
             ) : (
               <NotificationsNoneIcon />
             )}
@@ -133,23 +134,21 @@ const AppNavbar = (props) => {
                     </Link>
                   )}
 
-                  <button
+                  <IconButton
                     className={classes.notifDelete}
                     onClick={(e) => {
                       props.deleteNotification(notif._id);
                     }}
                   >
-                    x
-                  </button>
+                    <ClearIcon />
+                  </IconButton>
                 </MenuItem>
               ))
             ) : (
-              <small>No Notifications</small>
+              <div style={{ margin: "10px 30px" }}>No Notifications</div>
             )}
           </Menu>
 
-          {/* <h1>{length}</h1> */}
-          {/* <Typography>{props.auth.user && props.auth.user.name}</Typography> */}
           <Link to="/">
             <HomeIcon style={{ color: "white" }} />
           </Link>
