@@ -104,11 +104,11 @@ const AppNavbar = (props) => {
               Connekt
             </Link>
           </Typography>
-          <img
+          {/* <img
             src={props.auth.user.image}
             alt="Profile Img"
             className={classes.userImg}
-          />
+          /> */}
           <IconButton
             color="inherit"
             onClick={(event) => {

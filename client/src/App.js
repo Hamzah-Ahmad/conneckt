@@ -15,7 +15,7 @@ import PostPage from "./components/layout/PostPage";
 import ProfilePage from "./components/layout/ProfilePage";
 
 import io from "socket.io-client";
-const socket = io.connect("http://localhost:5000");
+const socket = io.connect("/");
 
 function App() {
   useEffect(() => {

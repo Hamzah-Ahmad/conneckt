@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   newPost: {
     border: "1px solid #bfbfbf",
     backgroundColor: "#fff",
+    marginBottom: theme.spacing(2),
 
     borderRadius: 20,
     marginTop: 15,

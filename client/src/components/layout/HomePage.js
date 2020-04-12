@@ -9,6 +9,7 @@ import PostComponent from "../post/PostComponent";
 import PostTextBox from "./PostTextBox";
 import Container from "@material-ui/core/Container";
 import ImageUpload from "./ImageUpload";
+import Switch from "@material-ui/core/Switch";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -65,6 +66,13 @@ const useStyles = makeStyles((theme) => ({
       display: "flex",
     },
   },
+  sideBarName: {
+    fontSize: 15,
+    marginBottom: 10,
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 8,
+    },
+  },
 }));
 const HomePage = (props) => {
   const classes = useStyles();
@@ -85,6 +93,7 @@ const HomePage = (props) => {
         {props.followReducer.followers && (
           <div className={classes.sideBar}>
             <img src={props.auth.user.image} className={classes.userImage} />
+            <div className={classes.sideBarName}>{props.auth.user.name}</div>
             <ImageUpload />
             <div style={{ marginTop: "20px" }}>
               Following: {props.followReducer.following.length}
@@ -101,10 +110,16 @@ const HomePage = (props) => {
 
           <div>
             <PostTextBox />
-            <button onClick={() => setLimitPosts(!limitPosts)}>
-              View posts by
-            </button>
-            {posts && limitPosts
+            <small>See Posts:</small>
+            <Switch
+              checked={limitPosts}
+              onChange={() => {
+                setLimitPosts(!limitPosts);
+              }}
+              color="primary"
+            />
+            {limitPosts ? <small>People you follow</small> : <small>All</small>}
+            {posts && !limitPosts
               ? posts.map((post) => (
                   <div key={post._id}>
                     <PostComponent post={post} />

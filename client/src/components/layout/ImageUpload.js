@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
   button: {
     textTransform: "none",
     wordSpacing: "5px",
+    [theme.breakpoints.down("md")]: {
+      fontSize: 12,
+    },
   },
   editIcon: {
     [theme.breakpoints.down("md")]: {
@@ -59,7 +62,7 @@ const ImageUpload = (props) => {
           className={classes.button}
         >
           <EditIcon className={classes.editIcon} />{" "}
-          <small style={{ marginLeft: "5px" }}>Upload New</small>
+          <small style={{ marginLeft: "5px" }}>Change Photo</small>
         </Button>
       </label>
     </div>
