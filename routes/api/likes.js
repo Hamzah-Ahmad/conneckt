@@ -18,6 +18,8 @@ router.post("/:postId", auth, async (req, res) => {
   const postAuthor = await User.findById(post.author);
   if (!postAuthor)
     return res.status(404).json({ msg: "Post Author not found" });
+  const currUser = await User.findById(req.user._id);
+  if (!currUser) return res.status(404).json({ msg: "Current user not found" });
   try {
     if (post.likes.includes(req.user._id)) {
       post.likes = post.likes.filter(
@@ -29,6 +31,7 @@ router.post("/:postId", auth, async (req, res) => {
         user: req.user._id.toString(),
         text: `${req.user.name} liked your post`,
         post: post,
+        userImg: currUser.image,
       });
       // console.log(postAuthor);
       postAuthor.notifications.push(notif);

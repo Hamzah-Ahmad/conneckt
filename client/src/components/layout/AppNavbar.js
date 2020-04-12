@@ -6,7 +6,7 @@ import {
 } from "../../actions/notificationsActions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
+import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -26,6 +26,16 @@ const useStyles = makeStyles((theme) => ({
   button: {
     justifyContent: "flex-start",
   },
+  followBack: {
+    padding: 4,
+    margin: 0,
+    textTransform: "none",
+    wordSpacing: "5px",
+    [theme.breakpoints.down("md")]: {
+      fontSize: 12,
+    },
+  },
+
   link: {
     width: "100%",
   },
@@ -56,6 +66,12 @@ const useStyles = makeStyles((theme) => ({
   },
   notifDelete: {
     float: "right",
+  },
+  notifImg: {
+    height: 45,
+    widtht: 45,
+    marginRight: 5,
+    borderRadius: 100,
   },
   title: {
     color: "#fff",
@@ -148,22 +164,32 @@ const AppNavbar = (props) => {
                     >
                       <MenuItem
                         onClick={() => {
-                          props.deleteNotification(notif._id);
+                          // props.deleteNotification(notif._id);
+                          console.log(notif);
                         }}
                         className={classes.menuItem}
                       >
+                        <img
+                          src={notif.userImg}
+                          alt="User Image"
+                          className={classes.notifImg}
+                        />
                         {notif.text}
                       </MenuItem>
                     </Link>
                   ) : (
-                    <Link
-                      to={{
-                        pathname: `/profile/${notif.user}`,
-                      }}
-                      className={classes.link}
-                    >
-                      {notif.text}
-                    </Link>
+                    <div className={classes.link}>
+                      <MenuItem
+                        onClick={() => {
+                          // props.deleteNotification(notif._id);
+                          console.log(notif);
+                        }}
+                        className={classes.menuItem}
+                      >
+                        <img src={notif.userImg} className={classes.notifImg} />
+                        {notif.text}
+                      </MenuItem>
+                    </div>
                   )}
 
                   <IconButton

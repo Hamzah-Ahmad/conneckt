@@ -8,13 +8,15 @@ const User = require("../../models/User");
 //@desc Making a comment on a post
 //@access Private
 router.get("/", auth, async (req, res) => {
-  User.findById(req.user._id).then((user) => {
-    if (!user) {
-      res.status(401).json({ msg: "User not found" });
-    } else {
-      res.json(user.notifications);
-    }
-  });
+  await User.findById(req.user._id)
+    .populate("userObj")
+    .exec((err, user) => {
+      if (!user) {
+        res.status(401).json({ msg: "User not found" });
+      } else {
+        res.json(user.notifications);
+      }
+    });
   //   res.send("Reached");
 });
 

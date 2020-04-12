@@ -3,6 +3,9 @@ const Post = require("../models/Posts");
 
 const NotificationSchema = new mongoose.Schema({
   user: String,
+  username: String,
+  userImg: String,
+
   text: {
     type: String,
     required: true,

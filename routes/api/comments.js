@@ -38,6 +38,7 @@ router.post("/:postId", auth, async (req, res) => {
       user: req.user._id.toString(),
       text: `${req.user.name} commented on your post`,
       post: post,
+      userImg: commentAuthor.image,
     });
     // console.log(postAuthor);
     postAuthor.notifications.push(notif);

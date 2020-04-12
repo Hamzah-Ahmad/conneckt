@@ -11,8 +11,10 @@ const ioServer = require("../../server");
 //@access Private
 router.post("/:userId", auth, async (req, res) => {
   const userToFollow = await User.findById(req.params.userId);
-  const currUser = await User.findById(req.user._id);
   if (!userToFollow) return res.status(404).json({ msg: "User not found" });
+  const currUser = await User.findById(req.user._id);
+  if (!currUser) return res.status(404).json({ msg: "Current user not found" });
+  // console.log(currUser);
   //   const postAuthor = await User.findById(post.author);
   //   if (!postAuthor)
   //     return res.status(404).json({ msg: "Post Author not found" });
@@ -40,6 +42,8 @@ router.post("/:userId", auth, async (req, res) => {
       const notif = await new Notification({
         user: req.user._id.toString(),
         text: `${req.user.name} followed you`,
+        username: currUser.name,
+        userImg: currUser.image,
       });
       // console.log(postAuthor);
       userToFollow.notifications.push(notif);
