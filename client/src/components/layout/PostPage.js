@@ -54,6 +54,11 @@ const useStyles = makeStyles((theme) => ({
   likeIcon: {
     paddingLeft: 0,
   },
+  notFound: {
+    margin: 30,
+    padding: 30,
+    fontSize: 30,
+  },
   paper: {
     position: "absolute",
     width: 400,
@@ -198,7 +203,7 @@ const PostPage = (props) => {
             <Spinner />
           )
         ) : (
-          <div>Post Not Found</div>
+          <div className={classes.notFound}>Post Not Found</div>
         )}
       </Container>
     </div>
