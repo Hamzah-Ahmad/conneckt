@@ -46,32 +46,32 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   menuItem: {
+    fontSize: 14,
     [theme.breakpoints.down("xs")]: {
-      fontSize: 14,
-      // width: 200,
+      fontSize: 12,
     },
   },
   notificaiton: {
-    width: 400,
+    width: 440,
     margin: 0,
     padding: 0,
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     alignItems: "center",
-    fontSize: 16,
     [theme.breakpoints.down("xs")]: {
       width: 290,
-      fontSize: 6,
     },
   },
-  notifDelete: {
-    float: "right",
-  },
+
   notifImg: {
-    height: 45,
-    widtht: 45,
+    height: 35,
+    widtht: 35,
     marginRight: 5,
     borderRadius: 100,
+    [theme.breakpoints.down("xs")]: {
+      height: 15,
+      widtht: 15,
+    },
   },
   title: {
     color: "#fff",
@@ -174,7 +174,7 @@ const AppNavbar = (props) => {
                           alt="User Image"
                           className={classes.notifImg}
                         />
-                        {notif.text}
+                        <div style={{ width: "30px" }}>{notif.text}</div>
                       </MenuItem>
                     </Link>
                   ) : (

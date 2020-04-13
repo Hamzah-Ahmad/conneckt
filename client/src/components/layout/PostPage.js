@@ -74,6 +74,24 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2),
     backgroundColor: "#fff",
   },
+  postImage: {
+    display: "block",
+    maxHeight: 400,
+    maxWidth: 500,
+    [theme.breakpoints.down("xs")]: {
+      maxHeight: 180,
+      maxWidth: 220,
+    },
+    [theme.breakpoints.up("md")]: {
+      maxHeight: 400,
+      maxWidth: 500,
+    },
+    marginTop: 8,
+    // [theme.breakpoints.down("lg")]: {
+    //   height: 400,
+    //   width: 500,
+    // },
+  },
   postInfo: {
     display: "flex",
     justifyContent: "space-between",
@@ -172,6 +190,13 @@ const PostPage = (props) => {
                 </div>
               </div>
               <div className={classes.content}>{post.content}</div>
+              {post.image ? (
+                <img
+                  src={props.post.image}
+                  alt="Image"
+                  className={classes.postImage}
+                />
+              ) : null}
               <IconButton
                 onClick={() => {
                   props.likePost(post._id);
